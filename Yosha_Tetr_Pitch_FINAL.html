@@ -1,0 +1,2459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yosha Sanghvi → Tetr Student Experience Team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F3ED;
+  --ink:#15161A;
+  --ink-soft:#4A4C55;
+  --cobalt:#2336E0;
+  --stamp:#E8442E;
+  --line:#CFCEC2;
+  --board:#101116;
+  --board-cell:#1B1D24;
+  --board-text:#F2EFE4;
+  --mono:'Space Mono', ui-monospace, monospace;
+  --sans:'Archivo', system-ui, sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);background:var(--paper);color:var(--ink);
+  line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--cobalt);color:#fff}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--cobalt);display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--cobalt)}
+h1,h2,h3{font-weight:850;line-height:1.05;letter-spacing:-.02em}
+h2{font-size:clamp(29px,4.2vw,48px);font-stretch:108%}
+h2.kin .w{display:inline-block;opacity:0;transform:translateY(.6em) rotate(2deg);transition:opacity .55s,transform .55s cubic-bezier(.2,.9,.2,1)}
+h2.kin.lit .w{opacity:1;transform:none}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);
+  font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+  padding:15px 24px;border-radius:999px;border:2px solid var(--ink);
+  background:var(--ink);color:var(--paper);text-decoration:none;cursor:pointer;
+  transition:transform .25s cubic-bezier(.2,.9,.3,1.4),background .2s,color .2s,box-shadow .25s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(21,22,26,.22)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+
+#trail{
+  position:fixed;top:0;left:0;z-index:300;pointer-events:none;
+  font-size:15px;color:var(--cobalt);opacity:0;transition:opacity .3s;will-change:transform;
+}
+@media(pointer:coarse){#trail{display:none}}
+
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--cobalt);z-index:90}
+nav{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:80;
+  display:flex;align-items:center;gap:6px;
+  background:rgba(244,243,237,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border:1px solid var(--line);border-radius:999px;padding:8px 10px 8px 18px;
+  box-shadow:0 6px 24px rgba(21,22,26,.08);max-width:calc(100vw - 24px);
+}
+nav .brand{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.14em;margin-right:8px;white-space:nowrap}
+nav .brand b{color:var(--cobalt)}
+nav a.nl{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;padding:8px 12px;border-radius:999px;color:var(--ink-soft);
+  transition:background .2s,color .2s;white-space:nowrap;
+}
+nav a.nl:hover,nav a.nl.active{background:var(--ink);color:var(--paper)}
+@media(max-width:760px){nav a.nl{display:none}nav{padding:8px 16px}}
+nav a.navcta{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:8px 14px;border-radius:999px;background:var(--cobalt);color:#fff;white-space:nowrap;transition:background .2s,transform .2s}
+nav a.navcta:hover{background:var(--ink);transform:translateY(-1px)}
+
+/* ---------- hero ---------- */
+header.hero{padding:140px 0 80px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;z-index:2}
+@media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:44px}}
+.hero h1{font-size:clamp(37px,5.4vw,68px);font-stretch:112%;margin:22px 0 20px}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:inline-block;transform:translateY(110%);animation:rise .9s cubic-bezier(.2,.9,.2,1) forwards}
+.hero h1 .line:nth-child(2) span{animation-delay:.12s}
+.hero h1 .line:nth-child(3) span{animation-delay:.24s;color:var(--cobalt)}
+@keyframes rise{to{transform:none}}
+.hero p.lede{font-size:clamp(16px,1.6vw,18.5px);color:var(--ink-soft);max-width:540px;margin-bottom:30px;opacity:0;animation:fade .8s .5s forwards}
+@keyframes fade{to{opacity:1}}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fade .8s .7s forwards}
+.hero .hint{margin-top:24px;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.04em;opacity:0;animation:fade .8s 1s forwards}
+.hero .hint kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:#fff}
+.float-stamp{
+  position:absolute;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  font-weight:700;color:var(--cobalt);border:2.5px solid currentColor;border-radius:8px;
+  padding:6px 12px;opacity:.16;pointer-events:none;white-space:nowrap;z-index:1;
+  will-change:transform;text-transform:uppercase;
+}
+.float-stamp.red{color:var(--stamp)}
+.float-stamp.circle{border-radius:50%;padding:16px 10px;text-align:center}
+
+.board{
+  background:var(--board);border-radius:18px;padding:26px 24px;
+  box-shadow:0 30px 70px rgba(16,17,22,.35), inset 0 1px 0 rgba(255,255,255,.06);
+  transform:rotate(1.2deg);transition:transform .5s;
+}
+.board:hover{transform:rotate(0deg) scale(1.01)}
+.board .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px dashed rgba(255,255,255,.1)}
+.board .row:last-child{border-bottom:none}
+.board .label{font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:#8A8DA0;text-transform:uppercase}
+.board .val{font-family:var(--mono);font-size:13px;color:var(--board-text);letter-spacing:.1em;text-align:right}
+.board .val.blink{color:#FFD23F;animation:blink 1.4s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.flap-line{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap}
+.flap{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:38px;border-radius:5px;background:var(--board-cell);
+  color:var(--board-text);font-family:var(--mono);font-weight:700;font-size:19px;
+  box-shadow:inset 0 -10px 14px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  position:relative;overflow:hidden;
+}
+.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.55)}
+#plane{cursor:pointer;user-select:none;font-size:18px;display:inline-block;transition:transform .3s}
+#plane:hover{transform:translateX(4px) rotate(8deg)}
+.board .foot{margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:#6B6E80;text-transform:uppercase;display:flex;justify-content:space-between}
+
+.ticker{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:var(--cobalt);color:#fff;overflow:hidden;padding:12px 0}
+.ticker-track{display:flex;gap:48px;white-space:nowrap;width:max-content;animation:ticker 30s linear infinite;font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes ticker{to{transform:translateX(-50%)}}
+
+section{padding:92px 0;position:relative}
+.sec-head{max-width:700px;margin-bottom:48px}
+.sec-head p{color:var(--ink-soft);margin-top:16px;font-size:16.5px}
+
+/* observations */
+.obs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:880px){.obs{grid-template-columns:1fr}}
+.ob{
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;
+  opacity:0;transform:translateY(28px);
+  transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1),box-shadow .3s;
+}
+.ob.lit{opacity:1;transform:none}
+.ob:hover{box-shadow:0 18px 40px rgba(21,22,26,.1)}
+.ob .num{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--stamp);margin-bottom:12px;text-transform:uppercase}
+.ob h3{font-size:20px;font-stretch:108%;margin-bottom:10px}
+.ob p{font-size:14.5px;color:var(--ink-soft)}
+.ob .so{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:12px;color:var(--cobalt)}
+
+.arc-div{height:140px;position:relative;overflow:hidden}
+.arc-div svg{position:absolute;inset:0;width:100%;height:100%}
+.arc-div .dash{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:3 9}
+.arc-div .plane-on-path{font-size:20px}
+
+/* ---------- THE TERM ---------- */
+#term{transition:background .8s ease;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--tbg)}
+#term.bg0{--tbg:var(--paper)}
+#term.bg1{--tbg:#EDEFF9}
+#term.bg2{--tbg:#F4F3ED}
+#term.bg3{--tbg:#F8EFEA}
+#term.bg4{--tbg:#EEF2EC}
+.term-grid{display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:start}
+@media(max-width:880px){.term-grid{grid-template-columns:1fr;gap:0}}
+.rail{position:sticky;top:110px}
+@media(max-width:880px){
+  .rail{
+    position:sticky;top:70px;z-index:40;background:var(--tbg,var(--paper));
+    transition:background .8s ease;display:flex;align-items:center;gap:16px;
+    padding:12px 0 14px;border-bottom:1px solid var(--line);margin-bottom:30px;
+  }
+}
+.rail .clock{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+.rail .when{font-weight:900;font-stretch:115%;font-size:clamp(34px,3.2vw,48px);letter-spacing:-.02em;line-height:1;min-height:1.1em}
+.rail .phase{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt);margin-top:10px;min-height:1.2em}
+.rail .ringbox{margin-top:26px;display:flex;align-items:center;gap:14px}
+.rail .ring{transform:rotate(-90deg)}
+.rail .ring .bg{fill:none;stroke:var(--line);stroke-width:5}
+.rail .ring .fg{fill:none;stroke:var(--cobalt);stroke-width:5;stroke-linecap:round;stroke-dasharray:163.4;stroke-dashoffset:163.4;transition:stroke-dashoffset .2s linear}
+.rail .frac{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-soft)}
+@media(max-width:880px){
+  .rail .clock,.rail .ringbox{display:none}
+  .rail .when{font-size:25px}
+  .rail .phase{margin-top:2px}
+}
+.act{padding:0 0 76px;min-height:55vh}
+.act:last-child{padding-bottom:20px}
+.act-card{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px 34px;
+  display:grid;grid-template-columns:1.05fr .85fr;gap:32px;align-items:start;
+  opacity:.25;transform:translateY(30px) scale(.985);filter:saturate(.6);
+  transition:opacity .6s,transform .6s cubic-bezier(.2,.8,.2,1),filter .6s,box-shadow .3s;
+}
+@media(max-width:980px){.act-card{grid-template-columns:1fr}}
+@media(max-width:680px){.act-card{padding:24px 20px}}
+.act.lit .act-card{opacity:1;transform:none;filter:none;box-shadow:0 24px 60px rgba(21,22,26,.1)}
+.voice{
+  background:var(--board);color:var(--board-text);border-radius:14px 14px 14px 4px;
+  padding:16px 20px;font-family:var(--mono);font-size:13px;line-height:1.6;
+  position:relative;margin-bottom:22px;
+}
+.voice::before{
+  content:attr(data-from);position:absolute;top:-9px;left:14px;
+  background:var(--stamp);color:#fff;font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;padding:3px 9px;border-radius:999px;
+}
+.act-card h3{font-size:clamp(22px,2.4vw,28px);font-stretch:110%;margin-bottom:12px}
+.act-card h3 em{font-style:normal;color:var(--cobalt)}
+.act-card .body{font-size:15px;color:var(--ink-soft)}
+.act-card .body p+p{margin-top:11px}
+.act-card .body strong{color:var(--ink)}
+.specline{
+  margin-top:18px;font-family:var(--mono);font-size:11.5px;line-height:1.9;color:var(--ink-soft);
+  border-top:1px dashed var(--line);padding-top:13px;
+}
+.specline b{color:var(--ink);text-transform:uppercase;letter-spacing:.12em;font-size:10px}
+.adm{
+  margin-top:14px;font-size:13.5px;display:flex;gap:10px;align-items:flex-start;
+  background:rgba(232,68,46,.06);border:1px solid rgba(232,68,46,.25);border-radius:12px;padding:12px 16px;
+}
+.adm b{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--stamp);white-space:nowrap;padding-top:3px}
+
+/* ---------- proof panels ---------- */
+.proof{
+  position:relative;border:1.5px dashed var(--line);border-radius:18px;
+  padding:26px 18px 18px;background:var(--paper);
+}
+.proof-tag{
+  position:absolute;top:-11px;left:16px;font-family:var(--mono);font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;background:var(--cobalt);color:#fff;
+  padding:4px 10px;border-radius:999px;
+}
+.proof > *{transition:opacity .5s,transform .5s}
+.act:not(.lit) .proof > *{opacity:0;transform:translateY(14px)}
+.act.lit .proof > *:nth-child(2){transition-delay:.15s}
+.act.lit .proof > *:nth-child(3){transition-delay:.3s}
+.act.lit .proof > *:nth-child(4){transition-delay:.45s}
+
+/* phone mockup */
+.phone{width:100%;max-width:248px;margin:0 auto;background:#0F1014;border-radius:28px;padding:10px;box-shadow:0 20px 44px rgba(16,17,22,.3)}
+.screen{background:#16181F;border-radius:20px;overflow:hidden}
+.app-head{padding:14px 14px 10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.app-head .t{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:#F2EFE4;text-transform:uppercase}
+.app-head .s{font-family:var(--mono);font-size:9px;color:#8A8DA0;margin-top:3px;letter-spacing:.1em}
+.app-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05)}
+.app-row .k{font-size:11.5px;color:#D5D7E0}
+.app-row .k small{display:block;font-size:9px;color:#7A7D8E;margin-top:1px}
+.app-row .v{font-family:var(--mono);font-size:9px;letter-spacing:.08em;white-space:nowrap}
+.v.ok{color:#7CE2A6}.v.warn{color:#FFB35C}.v.alert{color:#FF7A66}
+.app-foot{padding:10px 14px;font-family:var(--mono);font-size:8.5px;color:#6B6E80;letter-spacing:.12em;text-transform:uppercase;display:flex;justify-content:space-between}
+
+/* chat mockup */
+.chat{background:#EFE9E0;border-radius:16px;padding:14px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.chat-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);padding-bottom:10px;border-bottom:1px solid rgba(0,0,0,.08);margin-bottom:12px;display:flex;justify-content:space-between}
+.msg{max-width:88%;background:#fff;border-radius:12px 12px 12px 3px;padding:8px 12px;font-size:12px;margin-bottom:8px;box-shadow:0 1px 0 rgba(0,0,0,.06);line-height:1.45}
+.msg .who{display:block;font-size:9.5px;font-weight:700;letter-spacing:.04em;margin-bottom:2px}
+.msg.me{background:#DCE3FF;border-radius:12px 12px 3px 12px;margin-left:auto}
+.msg .time{display:block;text-align:right;font-size:8.5px;color:#9A9CA8;margin-top:3px;font-family:var(--mono)}
+.poll{background:#fff;border-radius:12px;padding:10px 12px;font-size:11px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.poll .q{font-weight:700;font-size:11.5px;margin-bottom:8px}
+.poll .opt{margin-bottom:6px}
+.poll .opt span{display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px}
+.poll .bar{height:6px;border-radius:99px;background:#E8E6DD;overflow:hidden}
+.poll .bar i{display:block;height:100%;background:var(--cobalt);border-radius:99px}
+
+/* fixture ticket + route */
+.ticket{
+  background:var(--ink);color:var(--paper);border-radius:14px;padding:18px 16px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.ticket::before,.ticket::after{
+  content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:var(--paper);top:50%;transform:translateY(-50%);
+}
+.ticket::before{left:-9px}.ticket::after{right:-9px}
+.ticket .lg{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:#8A8DA0;text-transform:uppercase}
+.ticket .vs{font-weight:900;font-stretch:113%;font-size:21px;margin:7px 0 4px;letter-spacing:-.01em}
+.ticket .vs em{font-style:normal;color:#FFD23F;font-size:13px;vertical-align:middle;padding:0 6px}
+.ticket .meta{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:#B9BBC6;text-transform:uppercase}
+.route-badge{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:12px}
+.route-badge .rb-top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+.route-badge svg{width:100%;height:46px;display:block}
+.route-badge .rt{fill:none;stroke:var(--cobalt);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:240;stroke-dashoffset:240;transition:stroke-dashoffset 1.4s ease .4s}
+.act.lit .route-badge .rt{stroke-dashoffset:0}
+.crew-strip{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.crew-chip{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px;text-transform:uppercase;background:#fff}
+
+/* care session card */
+.sess{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}
+.sess .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.sess .ava{width:38px;height:38px;border-radius:50%;background:var(--cobalt);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+.sess .nm{font-weight:800;font-size:14px}
+.sess .nm small{display:block;font-family:var(--mono);font-size:9px;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.sess .next{font-family:var(--mono);font-size:10.5px;background:rgba(35,54,224,.08);border:1px solid rgba(35,54,224,.25);color:var(--cobalt);border-radius:8px;padding:8px 11px;letter-spacing:.04em}
+.cont{display:flex;align-items:center;gap:0;margin-top:13px}
+.cont .c{flex:1;text-align:center;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;color:var(--ink-soft);position:relative;padding-top:13px}
+.cont .c::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:var(--cobalt)}
+.cont .c::after{content:"";position:absolute;top:4px;left:50%;width:100%;height:1.5px;background:var(--cobalt);opacity:.35}
+.cont .c:last-child::after{display:none}
+.fest{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}
+.fest .f{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 6px;text-align:center}
+.fest .f .m{font-family:var(--mono);font-size:8px;letter-spacing:.18em;color:var(--stamp);text-transform:uppercase}
+.fest .f .n{font-size:10.5px;font-weight:700;margin-top:2px}
+
+/* handover registry */
+.reg{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.reg .rh{display:grid;grid-template-columns:1.3fr .6fr 1.1fr;gap:8px;padding:10px 14px;font-family:var(--mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--line);background:var(--paper)}
+.reg .rr{display:grid;grid-template-columns:1.3fr .6fr 1.1fr;gap:8px;padding:11px 14px;font-size:11.5px;border-bottom:1px solid #ECEAE0;align-items:center}
+.reg .rr:last-child{border-bottom:none}
+.reg .rr b{font-size:12px}
+.reg .rr b small{display:block;font-weight:400;font-family:var(--mono);font-size:8.5px;color:var(--ink-soft);letter-spacing:.06em}
+.reg .city{font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+.st{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;border-radius:999px;padding:4px 9px;text-transform:uppercase;justify-self:start;white-space:nowrap}
+.st.g{background:rgba(23,140,84,.1);color:#178C54;border:1px solid rgba(23,140,84,.35)}
+.st.b{background:rgba(35,54,224,.08);color:var(--cobalt);border:1px solid rgba(35,54,224,.3)}
+.st.r{background:rgba(232,68,46,.08);color:var(--stamp);border:1px solid rgba(232,68,46,.3)}
+.trunk-note{margin-top:12px;font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);display:flex;gap:9px;align-items:center;letter-spacing:.03em}
+
+/* ---------- track record ---------- */
+.track{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:920px){.track{grid-template-columns:1fr}}
+.tcard{
+  background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;
+  opacity:0;transform:translateY(26px);transition:opacity .6s,transform .6s,box-shadow .3s;
+}
+.tcard.lit{opacity:1;transform:none}
+.tcard:hover{box-shadow:0 18px 44px rgba(21,22,26,.12)}
+.tcard .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt);margin-bottom:10px}
+.tcard h3{font-size:20px;font-stretch:108%;margin-bottom:9px}
+.tcard p{font-size:14px;color:var(--ink-soft)}
+.tcard .so{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px}
+.tcard .so b{color:var(--ink)}
+.mma{
+  margin-top:18px;background:var(--ink);color:var(--paper);border-radius:16px;
+  padding:24px 28px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:space-between;
+  opacity:0;transform:translateY(26px);transition:opacity .6s .15s,transform .6s .15s;
+}
+.mma.lit{opacity:1;transform:none}
+.mma p{font-size:14.5px;max-width:700px}
+.mma .glove{font-size:34px;cursor:pointer;transition:transform .2s;user-select:none}
+.mma .glove:hover{transform:scale(1.15) rotate(-12deg)}
+
+/* ---------- 90 days ---------- */
+.plan{background:var(--ink);color:var(--paper);border-radius:22px;padding:50px 46px;position:relative;overflow:hidden}
+@media(max-width:680px){.plan{padding:36px 24px}}
+.plan h2{color:#fff}
+.plan p.l{color:#B9BBC6;max-width:640px;margin-top:14px;font-size:16px}
+.plan .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px;position:relative;z-index:1}
+@media(max-width:780px){.plan .cols{grid-template-columns:1fr}}
+.plan .col{
+  border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:22px 20px;
+  opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s;
+}
+.plan .col.lit{opacity:1;transform:none}
+.plan .col:nth-child(2){transition-delay:.12s}.plan .col:nth-child(3){transition-delay:.24s}
+.plan .days{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);margin-bottom:9px}
+.plan h4{font-size:18px;font-stretch:108%;margin-bottom:10px}
+.plan .col p{font-size:13.5px;color:#C9CAD3}
+.plan .out{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,255,255,.18);font-size:12.5px;color:#D8D9E0}
+.plan .out b{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#FF8A75;display:block;margin-bottom:4px}
+.plan .watermark{position:absolute;right:-20px;bottom:-50px;font-weight:900;font-size:190px;font-stretch:115%;color:rgba(255,255,255,.045);pointer-events:none;line-height:1}
+
+/* ---------- CTA ---------- */
+#cta{text-align:center;padding:116px 0 96px;position:relative}
+#cta h2{font-size:clamp(31px,4.8vw,58px);max-width:840px;margin:18px auto}
+#cta p{color:var(--ink-soft);max-width:560px;margin:0 auto 32px;font-size:16.5px}
+.stamp{
+  position:absolute;font-family:var(--mono);font-weight:700;letter-spacing:.18em;
+  color:var(--stamp);border:4px solid var(--stamp);border-radius:10px;padding:10px 22px;
+  font-size:22px;transform:rotate(-12deg) scale(0);opacity:0;text-transform:uppercase;
+  transition:transform .45s cubic-bezier(.2,1.4,.3,1),opacity .3s;pointer-events:none;
+}
+.stamp.show{transform:rotate(-12deg) scale(1);opacity:.92}
+#approve-stamp{top:36px;right:8%}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.06em}
+footer .frow{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+#egg-dot{cursor:pointer;opacity:.45;transition:opacity .2s}
+#egg-dot:hover{opacity:1}
+
+#toast{
+  position:fixed;bottom:26px;left:50%;transform:translate(-50%,140%);
+  background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:13px;
+  padding:14px 22px;border-radius:12px;z-index:400;max-width:88vw;text-align:center;
+  transition:transform .45s cubic-bezier(.2,1.2,.3,1);box-shadow:0 18px 40px rgba(0,0,0,.3);
+}
+#toast.show{transform:translate(-50%,0)}
+.rain-stamp{
+  position:fixed;z-index:350;font-family:var(--mono);font-weight:700;font-size:13px;
+  letter-spacing:.14em;color:var(--cobalt);border:3px solid var(--cobalt);border-radius:8px;
+  padding:5px 12px;pointer-events:none;text-transform:uppercase;opacity:0;
+}
+@keyframes drop{
+  0%{opacity:0;transform:translateY(-40px) rotate(var(--r)) scale(.6)}
+  18%{opacity:.95;transform:translateY(0) rotate(var(--r)) scale(1.06)}
+  26%{transform:translateY(0) rotate(var(--r)) scale(1)}
+  80%{opacity:.95}
+  100%{opacity:0;transform:translateY(16px) rotate(var(--r))}
+}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.rv.lit{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .act-card,.tcard,.rv,.mma,.ob,.plan .col{opacity:1!important;transform:none!important;filter:none!important}
+  .act:not(.lit) .proof > *{opacity:1!important;transform:none!important}
+  .route-badge .rt{stroke-dashoffset:0!important}
+  h2.kin .w{opacity:1!important;transform:none!important}
+  .hero h1 .line span{transform:none!important}
+  .hero p.lede,.hero .ctas,.hero .hint{opacity:1!important}
+  #trail{display:none}
+}
+
+/* ===== merged: drafts + deep-dive overlays (v3 palette) ===== */
+#drafts{padding:92px 0;border-bottom:1px solid var(--line)}
+#drafts .band-label{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin:34px 0 16px;display:flex;align-items:center;gap:12px}
+#drafts .band-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.draft-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:760px){.draft-grid{grid-template-columns:1fr}}
+.draft{
+  position:relative;text-align:left;cursor:pointer;background:#fff;
+  border:1px solid var(--line);border-radius:16px;padding:22px 24px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:6px 18px;align-items:center;
+  font-family:var(--sans);transition:transform .25s cubic-bezier(.2,.9,.3,1.2),box-shadow .25s,border-color .25s;
+}
+.draft:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(21,22,26,.1);border-color:var(--ink)}
+.draft .d-no{grid-column:1;grid-row:1/3;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cobalt);align-self:center}
+.draft .d-name{grid-column:2;grid-row:1;justify-self:start;text-align:left;font-weight:800;font-size:18px;font-stretch:108%;letter-spacing:-.01em}
+.draft .d-sub{grid-column:2;grid-row:2;justify-self:start;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--ink-soft)}
+.draft .d-open{grid-column:3;grid-row:1/3;justify-self:end;align-self:center;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;transition:color .2s}
+.draft:hover .d-open{color:var(--cobalt)}
+
+
+
+
+/* ===== deep-dive panels: detailed content, V3 palette (magazine = TETR brand) ===== */
+.overlay{
+  --bg:#F4F3ED;--bg2:#EAE9E0;--green:#2336E0;--green-br:#2336E0;
+  --yellow:#2336E0;--gold:#9A7B1E;--cream:#15161A;--cream-dim:#4A4C55;
+  --cream-faint:#6A6C75;--line:#CFCEC2;--paper:#FBFAF4;--ink:#15161A;--ink-soft:#4A4C55;--ink-line:#CFCEC2;--forest:#2336E0;
+  --display:"Space Grotesk","Inter",sans-serif;--body:"Inter",sans-serif;--serif:"Newsreader",Georgia,serif;--sans:"Inter",sans-serif;
+  font-family:var(--sans);line-height:1.6;color:#15161A;background:#F4F3ED;
+}
+.overlay .eyebrow::before{content:none;display:none}
+
+  .overlay{position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;overflow-x:hidden}
+  .overlay[hidden]{display:none}
+  .ovclose{position:fixed;top:16px;left:16px;z-index:240;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.92);color:var(--cream);border:1px solid var(--line);border-radius:50%;font-size:1.35rem;line-height:1;cursor:pointer;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .ovclose:hover{border-color:var(--cream)}
+  .ideapanel[hidden]{display:none!important}
+  .ideapanel{min-height:auto!important}
+  .ideapanel .hero{min-height:0!important}
+  .ideapanel .eyebrow{justify-content:center!important}
+  .lab .hero{display:block!important;min-height:0!important;padding:46px 0 14px!important}
+  .lab .psw{margin-top:14px!important}
+  .mag .hero{padding:0!important;min-height:0!important}
+  @media(max-width:560px){.ovclose{top:10px;left:10px;width:40px;height:40px;font-size:1.2rem}}
+  /* 22 Under 22 P/S/W rectangle boxes (like the labs) */
+  #panel-twentytwo .magpsw{width:100%;max-width:880px;margin:6px auto 26px;padding:0 22px}
+  #panel-twentytwo .psw{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  #panel-twentytwo .psw .c{background:rgba(255,255,255,.06);border:1px solid rgba(244,242,233,.16);border-radius:14px;padding:20px;text-align:left}
+  #panel-twentytwo .psw .c h3{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;margin-bottom:9px}
+  #panel-twentytwo .psw .c.p h3{color:#E8A33D}
+  #panel-twentytwo .psw .c.s h3{color:#5FD38A}
+  #panel-twentytwo .psw .c.w h3{color:#FFC629}
+  #panel-twentytwo .psw .c p{font-size:.96rem;color:#F4F2E9;line-height:1.5}
+  @media(max-width:720px){#panel-twentytwo .psw{grid-template-columns:1fr}}
+  /* 22 Under 22 flip: two-page book on desktop, single page on mobile */
+  .swipehint{display:none}
+  @media(max-width:760px){
+    #panel-twentytwo .book{width:min(460px,94vw)!important;aspect-ratio:100/132!important;perspective:none!important;display:flex!important;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;border-radius:8px;box-shadow:0 22px 50px rgba(0,0,0,.45);margin:0 auto}
+    #panel-twentytwo .book::-webkit-scrollbar{height:0}
+    #panel-twentytwo .leaf{display:contents!important}
+    #panel-twentytwo .desk{display:none!important}
+    #panel-twentytwo .face{position:relative!important;inset:auto!important;flex:0 0 100%!important;width:100%!important;height:100%!important;scroll-snap-align:center;transform:none!important;-webkit-transform:none!important;backface-visibility:visible!important;-webkit-backface-visibility:visible!important;border:none}
+    #panel-twentytwo .face.back{transform:none!important}
+    #panel-twentytwo .controls{display:none}
+    #panel-twentytwo #counter{visibility:hidden}
+    #panel-twentytwo .swipehint{display:block;text-align:center}
+  }
+
+#panel-seminar{
+    --bg:#F4F3ED;--bg2:#EAE9E0;--green-br:#2336E0;--gold:#D9A93A;--yellow:#E8A33D;
+    --cream:#15161A;--cream-dim:#4A4C55;--line:#CFCEC2;
+    --paper:#FBFAF4;--ink:#15161A;--ink-soft:#6a7770;--ink-line:#CFCEC2;
+    --serif:"Newsreader",Georgia,serif;--sans:"Inter",sans-serif;
+  }
+#panel-seminar *{box-sizing:border-box;margin:0;padding:0}
+#panel-seminar{background:
+      radial-gradient(62% 44% at 50% -4%,rgba(217,169,58,.16),transparent 60%),
+      var(--bg);
+    color:var(--cream);font-family:var(--sans);line-height:1.6;padding:0 0 80px}
+#panel-seminar .back{position:fixed;top:18px;left:18px;z-index:20;color:var(--cream-dim);text-decoration:none;font-size:.85rem;font-weight:600;border:1px solid #CFCEC2;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.9)}
+#panel-seminar .back:hover{color:var(--cream);border-color:var(--cream)}
+#panel-seminar .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+#panel-seminar .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--green-br);font-weight:700}
+#panel-seminar .hero{padding:92px 0 30px;text-align:center}
+#panel-seminar .host{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.14em;font-size:.82rem;color:var(--gold);margin-top:14px}
+#panel-seminar .hero h1{font-size:clamp(2.4rem,6.6vw,4.1rem);font-weight:900;letter-spacing:-.04em;line-height:.96;margin:10px 0 6px}
+#panel-seminar .hero h1 em{font-style:normal;color:var(--yellow)}
+#panel-seminar .hero .sub{font-family:var(--serif);font-size:clamp(1.05rem,2.2vw,1.4rem);color:var(--cream-dim);max-width:32ch;margin:8px auto 0;line-height:1.4}
+#panel-seminar .meta{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+#panel-seminar .meta span{font-size:.78rem;font-weight:600;color:var(--cream-dim);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+#panel-seminar .psw{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 8px}
+@media(max-width:720px){#panel-seminar .psw{grid-template-columns:1fr}}
+#panel-seminar .psw .c{background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:20px}
+#panel-seminar .psw .c h3{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;margin-bottom:9px}
+#panel-seminar .psw .c.p h3{color:#E8442E}
+#panel-seminar .psw .c.s h3{color:var(--green-br)}
+#panel-seminar .psw .c.w h3{color:var(--gold)}
+#panel-seminar .psw .c p{font-size:.96rem;color:var(--cream);line-height:1.5}
+#panel-seminar .run{background:linear-gradient(165deg,var(--paper),#EAE6D6);color:var(--ink);border-radius:18px;padding:clamp(28px,5vw,46px);margin:40px 0;box-shadow:0 40px 90px rgba(20,22,30,.14);position:relative;overflow:hidden}
+#panel-seminar .run::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--gold),var(--green-br),var(--gold))}
+#panel-seminar .run .head{text-align:center;border-bottom:1px solid var(--ink-line);padding-bottom:18px;margin-bottom:8px}
+#panel-seminar .run .head .k{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+#panel-seminar .run .head h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3.4vw,2.3rem);color:var(--ink);margin-top:6px}
+#panel-seminar .run .head p{font-size:.84rem;color:var(--ink-soft);margin-top:4px}
+#panel-seminar .day{margin-top:24px}
+#panel-seminar .day .dh{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+#panel-seminar .day .dh b{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:#E8442E}
+#panel-seminar .day .dh span{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+#panel-seminar .row{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px dotted var(--ink-line)}
+#panel-seminar .row .n{font-family:var(--serif);font-size:1.05rem;color:var(--gold);font-weight:600;min-width:24px}
+#panel-seminar .row .cb{flex:1}
+#panel-seminar .row .cb .nm{font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.25rem);font-weight:600;color:var(--ink);line-height:1.2}
+#panel-seminar .row .cb .ds{font-size:.88rem;color:#4A4C55;margin-top:3px;line-height:1.45}
+#panel-seminar .row .tm{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;white-space:nowrap;padding-top:5px}
+#panel-seminar .lenses{margin:42px 0 0}
+#panel-seminar .lenses .k{text-align:center;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--green-br);font-weight:700;margin-bottom:18px}
+#panel-seminar .lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:720px){#panel-seminar .lgrid{grid-template-columns:1fr 1fr}}
+#panel-seminar .lgrid .l{background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:18px 16px;text-align:center}
+#panel-seminar .lgrid .l .ln{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--gold);display:block;margin-bottom:8px}
+#panel-seminar .lgrid .l b{display:block;font-family:var(--serif);font-size:1.02rem;color:var(--cream);line-height:1.2}
+#panel-seminar .lgrid .l span{display:block;font-size:.78rem;color:var(--cream-dim);margin-top:5px;line-height:1.4}
+#panel-seminar .foot{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
+@media(max-width:640px){#panel-seminar .foot{grid-template-columns:1fr}}
+#panel-seminar .foot .card{background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:22px}
+#panel-seminar .foot .card h4{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:9px}
+#panel-seminar .foot .card p{color:var(--cream-dim);font-size:.92rem;line-height:1.5}
+#panel-seminar .payoff{text-align:center;margin-top:38px;font-family:var(--serif);font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.35;color:var(--cream)}
+#panel-seminar .payoff em{font-style:normal;color:var(--yellow)}
+#panel-taste{
+    --bg:#F4F3ED;--bg2:#EAE9E0;--green-br:#2336E0;--gold:#D9A93A;
+    --cream:#15161A;--cream-dim:#4A4C55;--line:#CFCEC2;
+    --paper:#FBFAF4;--ink:#15161A;--ink-soft:#6a7770;--ink-line:#CFCEC2;
+    --saffron:#E8A33D;--chili:#E8442E;--turmeric:#D9A93A;--leaf:#2336E0;--plum:#E8442E;
+    --serif:"Newsreader",Georgia,serif;--sans:"Inter",sans-serif;
+  }
+#panel-taste *{box-sizing:border-box;margin:0;padding:0}
+#panel-taste{background:
+      radial-gradient(70% 45% at 80% -5%,rgba(232,163,61,.18),transparent 60%),
+      radial-gradient(60% 40% at 8% 4%,rgba(232,68,46,.12),transparent 55%),
+      var(--bg);
+    color:var(--cream);font-family:var(--sans);line-height:1.6;padding:0 0 80px}
+#panel-taste .back{position:fixed;top:18px;left:18px;z-index:20;color:var(--cream-dim);text-decoration:none;font-size:.85rem;font-weight:600;border:1px solid #CFCEC2;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.9)}
+#panel-taste .back:hover{color:var(--cream);border-color:var(--cream)}
+#panel-taste .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+#panel-taste .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--green-br);font-weight:700}
+#panel-taste .hero{padding:92px 0 30px;text-align:center}
+#panel-taste .collab{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.14em;font-size:.82rem;color:var(--gold);margin-top:14px}
+#panel-taste .hero h1{font-size:clamp(2.6rem,7.5vw,4.6rem);font-weight:900;letter-spacing:-.04em;line-height:.94;margin:10px 0 6px}
+#panel-taste .hero h1 em{font-style:normal;color:#E8A33D}
+#panel-taste .hero .sub{font-family:var(--serif);font-size:clamp(1.05rem,2.2vw,1.4rem);color:var(--cream-dim);max-width:30ch;margin:8px auto 0;line-height:1.4}
+#panel-taste .dots{display:flex;gap:10px;justify-content:center;margin:22px 0 4px}
+#panel-taste .dots i{width:13px;height:13px;border-radius:50%}
+#panel-taste .meta{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+#panel-taste .meta span{font-size:.78rem;font-weight:600;color:var(--cream-dim);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+#panel-taste .psw{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 8px}
+@media(max-width:720px){#panel-taste .psw{grid-template-columns:1fr}}
+#panel-taste .psw .c{background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:20px 20px 22px}
+#panel-taste .psw .c h3{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;margin-bottom:9px}
+#panel-taste .psw .c.p h3{color:#E8442E}
+#panel-taste .psw .c.s h3{color:var(--green-br)}
+#panel-taste .psw .c.w h3{color:var(--gold)}
+#panel-taste .psw .c p{font-size:.96rem;color:var(--cream);line-height:1.5}
+#panel-taste .menu{background:
+      repeating-linear-gradient(118deg,rgba(20,22,30,.04) 0 1.5px,transparent 1.5px 9px),
+      linear-gradient(165deg,var(--paper),#EAE6D6);
+    color:var(--ink);border-radius:18px;padding:clamp(28px,5vw,48px);margin:40px 0;box-shadow:0 40px 90px rgba(20,22,30,.14);position:relative;overflow:hidden}
+#panel-taste .menu::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--saffron),var(--turmeric),var(--leaf),var(--chili))}
+#panel-taste .menu .head{text-align:center;border-bottom:1px solid var(--ink-line);padding-bottom:18px;margin-bottom:8px}
+#panel-taste .menu .head .k{font-family:var(--sans);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+#panel-taste .menu .head h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3.4vw,2.3rem);color:var(--ink);margin-top:6px}
+#panel-taste .menu .head p{font-size:.84rem;color:var(--ink-soft);margin-top:4px}
+#panel-taste .day{margin-top:24px}
+#panel-taste .day .dh{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+#panel-taste .day .dh b{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--chili)}
+#panel-taste .day .dh span{font-family:var(--sans);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+#panel-taste .course{display:flex;gap:16px;align-items:baseline;padding:13px 0;border-bottom:1px dotted var(--ink-line)}
+#panel-taste .course .n{font-family:var(--serif);font-size:1.05rem;color:var(--gold);font-weight:600;min-width:24px}
+#panel-taste .course .cb{flex:1}
+#panel-taste .course .cb .nm{font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.25rem);font-weight:600;color:var(--ink);line-height:1.2}
+#panel-taste .course .cb .ds{font-size:.88rem;color:#4A4C55;margin-top:3px;line-height:1.45}
+#panel-taste .course .tm{font-family:var(--sans);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;white-space:nowrap;padding-top:5px}
+#panel-taste .lenses{margin:42px 0 0}
+#panel-taste .lenses .k{text-align:center;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--green-br);font-weight:700;margin-bottom:18px}
+#panel-taste .lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:720px){#panel-taste .lgrid{grid-template-columns:1fr 1fr}}
+#panel-taste .lgrid .l{background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:18px 16px;text-align:center}
+#panel-taste .lgrid .l .ln{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--gold);display:block;margin-bottom:8px}
+#panel-taste .lgrid .l b{display:block;font-family:var(--serif);font-size:1.02rem;color:var(--cream);line-height:1.2}
+#panel-taste .lgrid .l span{display:block;font-size:.78rem;color:var(--cream-dim);margin-top:5px;line-height:1.4}
+#panel-taste .foot{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
+@media(max-width:640px){#panel-taste .foot{grid-template-columns:1fr}}
+#panel-taste .foot .card{background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:22px}
+#panel-taste .foot .card h4{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:9px}
+#panel-taste .foot .card p{color:var(--cream-dim);font-size:.92rem;line-height:1.5}
+#panel-taste .payoff{text-align:center;margin-top:38px;font-family:var(--serif);font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.35;color:var(--cream)}
+#panel-taste .payoff em{font-style:normal;color:var(--gold)}
+#panel-jugaad{
+    --bg:#F4F3ED;--bg2:#EAE9E0;--green-br:#2336E0;--gold:#D9A93A;
+    --cream:#15161A;--cream-dim:#4A4C55;--line:#CFCEC2;
+    --paper:#FBFAF4;--ink:#15161A;--ink-soft:#6a7770;--ink-line:#CFCEC2;
+    --marigold:#E8A33D;--redhot:#E8442E;--rick:#2336E0;--indigo:#2336E0;
+    --serif:"Newsreader",Georgia,serif;--sans:"Inter",sans-serif;
+  }
+#panel-jugaad *{box-sizing:border-box;margin:0;padding:0}
+#panel-jugaad{background:
+      radial-gradient(64% 42% at 50% -4%,rgba(232,163,61,.22),transparent 60%),
+      radial-gradient(54% 40% at 10% 6%,rgba(232,68,46,.14),transparent 55%),
+      var(--bg);
+    color:var(--cream);font-family:var(--sans);line-height:1.6;padding:0 0 80px}
+#panel-jugaad .back{position:fixed;top:18px;left:18px;z-index:20;color:var(--cream-dim);text-decoration:none;font-size:.85rem;font-weight:600;border:1px solid #CFCEC2;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.9)}
+#panel-jugaad .back:hover{color:var(--cream);border-color:var(--cream)}
+#panel-jugaad .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+#panel-jugaad .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--green-br);font-weight:700}
+#panel-jugaad .hero{padding:92px 0 30px;text-align:center}
+#panel-jugaad .host{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.14em;font-size:.82rem;color:var(--gold);margin-top:14px}
+#panel-jugaad .hero h1{font-size:clamp(2.4rem,6.6vw,4rem);font-weight:900;letter-spacing:-.04em;line-height:.96;margin:10px 0 6px}
+#panel-jugaad .hero h1 em{font-style:normal;color:#E8A33D}
+#panel-jugaad .hero .sub{font-family:var(--serif);font-size:clamp(1.05rem,2.2vw,1.4rem);color:var(--cream-dim);max-width:34ch;margin:8px auto 0;line-height:1.4}
+#panel-jugaad .dots{display:flex;gap:10px;justify-content:center;margin:22px 0 4px}
+#panel-jugaad .dots i{width:13px;height:13px;border-radius:50%}
+#panel-jugaad .meta{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+#panel-jugaad .meta span{font-size:.78rem;font-weight:600;color:var(--cream-dim);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+#panel-jugaad .psw{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 8px}
+@media(max-width:720px){#panel-jugaad .psw{grid-template-columns:1fr}}
+#panel-jugaad .psw .c{background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:20px}
+#panel-jugaad .psw .c h3{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;margin-bottom:9px}
+#panel-jugaad .psw .c.p h3{color:#E8442E}
+#panel-jugaad .psw .c.s h3{color:var(--green-br)}
+#panel-jugaad .psw .c.w h3{color:var(--gold)}
+#panel-jugaad .psw .c p{font-size:.96rem;color:var(--cream);line-height:1.5}
+#panel-jugaad .run{background:linear-gradient(165deg,var(--paper),#EAE6D6);color:var(--ink);border-radius:18px;padding:clamp(28px,5vw,46px);margin:40px 0;box-shadow:0 40px 90px rgba(20,22,30,.14);position:relative;overflow:hidden}
+#panel-jugaad .run::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--gold),var(--green-br),var(--gold))}
+#panel-jugaad .run .head{text-align:center;border-bottom:1px solid var(--ink-line);padding-bottom:18px;margin-bottom:8px}
+#panel-jugaad .run .head .k{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+#panel-jugaad .run .head h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3.4vw,2.3rem);color:var(--ink);margin-top:6px}
+#panel-jugaad .run .head p{font-size:.84rem;color:var(--ink-soft);margin-top:4px}
+#panel-jugaad .row{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px dotted var(--ink-line)}
+#panel-jugaad .row .n{font-family:var(--serif);font-size:1.05rem;color:var(--gold);font-weight:600;min-width:24px}
+#panel-jugaad .row .cb{flex:1}
+#panel-jugaad .row .cb .nm{font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.25rem);font-weight:600;color:var(--ink);line-height:1.2}
+#panel-jugaad .row .cb .ds{font-size:.88rem;color:#4A4C55;margin-top:3px;line-height:1.45}
+#panel-jugaad .row .tm{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;white-space:nowrap;padding-top:5px}
+#panel-jugaad .lenses{margin:42px 0 0}
+#panel-jugaad .lenses .k{text-align:center;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--green-br);font-weight:700;margin-bottom:18px}
+#panel-jugaad .lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:720px){#panel-jugaad .lgrid{grid-template-columns:1fr 1fr}}
+#panel-jugaad .lgrid .l{background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:18px 16px;text-align:center}
+#panel-jugaad .lgrid .l .ln{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--gold);display:block;margin-bottom:8px}
+#panel-jugaad .lgrid .l b{display:block;font-family:var(--serif);font-size:1.02rem;color:var(--cream);line-height:1.2}
+#panel-jugaad .lgrid .l span{display:block;font-size:.78rem;color:var(--cream-dim);margin-top:5px;line-height:1.4}
+#panel-jugaad .foot{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
+@media(max-width:640px){#panel-jugaad .foot{grid-template-columns:1fr}}
+#panel-jugaad .foot .card{background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:22px}
+#panel-jugaad .foot .card h4{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:9px}
+#panel-jugaad .foot .card p{color:var(--cream-dim);font-size:.92rem;line-height:1.5}
+#panel-jugaad .payoff{text-align:center;margin-top:38px;font-family:var(--serif);font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.35;color:var(--cream)}
+#panel-jugaad .payoff em{font-style:normal;color:var(--gold)}
+#panel-improv{
+    --bg:#F4F3ED;--bg2:#EAE9E0;--green-br:#2336E0;--gold:#D9A93A;
+    --cream:#15161A;--cream-dim:#4A4C55;--line:#CFCEC2;
+    --paper:#FBFAF4;--ink:#15161A;--ink-soft:#6a7770;--ink-line:#CFCEC2;
+    --pink:#E8442E;--yellow:#FFD23F;--blue:#5B8CFF;--violet:#2336E0;--mint:#5B8CFF;
+    --serif:"Newsreader",Georgia,serif;--sans:"Inter",sans-serif;
+  }
+#panel-improv *{box-sizing:border-box;margin:0;padding:0}
+#panel-improv{background:
+      radial-gradient(64% 42% at 50% -4%,rgba(232,68,46,.18),transparent 60%),
+      radial-gradient(54% 40% at 90% 6%,rgba(35,54,224,.14),transparent 55%),
+      var(--bg);
+    color:var(--cream);font-family:var(--sans);line-height:1.6;padding:0 0 80px}
+#panel-improv .back{position:fixed;top:18px;left:18px;z-index:20;color:var(--cream-dim);text-decoration:none;font-size:.85rem;font-weight:600;border:1px solid #CFCEC2;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,.9)}
+#panel-improv .back:hover{color:var(--cream);border-color:var(--cream)}
+#panel-improv .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+#panel-improv .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--green-br);font-weight:700}
+#panel-improv .hero{padding:92px 0 30px;text-align:center}
+#panel-improv .host{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.14em;font-size:.82rem;color:var(--gold);margin-top:14px}
+#panel-improv .hero h1{font-size:clamp(2.6rem,7.5vw,4.6rem);font-weight:900;letter-spacing:-.04em;line-height:.94;margin:10px 0 6px}
+#panel-improv .hero h1 em{font-style:normal;color:#E8A33D}
+#panel-improv .hero .sub{font-family:var(--serif);font-size:clamp(1.05rem,2.2vw,1.4rem);color:var(--cream-dim);max-width:32ch;margin:8px auto 0;line-height:1.4}
+#panel-improv .dots{display:flex;gap:10px;justify-content:center;margin:22px 0 4px}
+#panel-improv .dots i{width:13px;height:13px;border-radius:50%}
+#panel-improv .meta{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+#panel-improv .meta span{font-size:.78rem;font-weight:600;color:var(--cream-dim);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
+#panel-improv .psw{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 8px}
+@media(max-width:720px){#panel-improv .psw{grid-template-columns:1fr}}
+#panel-improv .psw .c{background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:20px}
+#panel-improv .psw .c h3{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;margin-bottom:9px}
+#panel-improv .psw .c.p h3{color:#E8442E}
+#panel-improv .psw .c.s h3{color:var(--green-br)}
+#panel-improv .psw .c.w h3{color:var(--gold)}
+#panel-improv .psw .c p{font-size:.96rem;color:var(--cream);line-height:1.5}
+#panel-improv .run{background:linear-gradient(165deg,var(--paper),#EAE6D6);color:var(--ink);border-radius:18px;padding:clamp(28px,5vw,46px);margin:40px 0;box-shadow:0 40px 90px rgba(20,22,30,.14);position:relative;overflow:hidden}
+#panel-improv .run::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--gold),var(--green-br),var(--gold))}
+#panel-improv .run .head{text-align:center;border-bottom:1px solid var(--ink-line);padding-bottom:18px;margin-bottom:8px}
+#panel-improv .run .head .k{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+#panel-improv .run .head h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3.4vw,2.3rem);color:var(--ink);margin-top:6px}
+#panel-improv .run .head p{font-size:.84rem;color:var(--ink-soft);margin-top:4px}
+#panel-improv .row{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px dotted var(--ink-line)}
+#panel-improv .row .n{font-family:var(--serif);font-size:1.05rem;color:var(--gold);font-weight:600;min-width:24px}
+#panel-improv .row .cb{flex:1}
+#panel-improv .row .cb .nm{font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.25rem);font-weight:600;color:var(--ink);line-height:1.2}
+#panel-improv .row .cb .ds{font-size:.88rem;color:#4A4C55;margin-top:3px;line-height:1.45}
+#panel-improv .row .tm{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;white-space:nowrap;padding-top:5px}
+#panel-improv .lenses{margin:42px 0 0}
+#panel-improv .lenses .k{text-align:center;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--green-br);font-weight:700;margin-bottom:18px}
+#panel-improv .lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:720px){#panel-improv .lgrid{grid-template-columns:1fr 1fr}}
+#panel-improv .lgrid .l{background:#ffffff;border:1px solid var(--line);border-radius:12px;padding:18px 16px;text-align:center}
+#panel-improv .lgrid .l .ln{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--gold);display:block;margin-bottom:8px}
+#panel-improv .lgrid .l b{display:block;font-family:var(--serif);font-size:1.02rem;color:var(--cream);line-height:1.2}
+#panel-improv .lgrid .l span{display:block;font-size:.78rem;color:var(--cream-dim);margin-top:5px;line-height:1.4}
+#panel-improv .foot{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
+@media(max-width:640px){#panel-improv .foot{grid-template-columns:1fr}}
+#panel-improv .foot .card{background:#ffffff;border:1px solid var(--line);border-radius:14px;padding:22px}
+#panel-improv .foot .card h4{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:9px}
+#panel-improv .foot .card p{color:var(--cream-dim);font-size:.92rem;line-height:1.5}
+#panel-improv .payoff{text-align:center;margin-top:38px;font-family:var(--serif);font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.35;color:var(--cream)}
+#panel-improv .payoff em{font-style:normal;color:var(--gold)}
+#panel-twentytwo{
+    --ink:#14140F;--ink-soft:#566860;--paper:#FBFAF2;--paper2:#EBE6D2;
+    --green:#147A4A;--green2:#0F4730;--gold:#C89B1E;--line:rgba(20,20,15,.16);
+    --serif:"Newsreader",Georgia,serif;--sans:"Inter",sans-serif;
+  }
+#panel-twentytwo *{box-sizing:border-box;margin:0;padding:0}
+#panel-twentytwo{background:#0C3B26;color:#F4F2E9;font-family:var(--sans);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 14px 64px}
+#panel-twentytwo .back{position:fixed;top:16px;left:16px;z-index:40;color:rgba(244,242,233,.72);text-decoration:none;font-size:.84rem;font-weight:600;border:1px solid rgba(244,242,233,.22);padding:8px 14px;border-radius:8px;background:rgba(12,59,38,.86)}
+#panel-twentytwo .back:hover{color:#fff;border-color:#fff}
+#panel-twentytwo .head{text-align:center;margin-bottom:18px}
+#panel-twentytwo .head .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#5FD38A;font-weight:700}
+#panel-twentytwo .head h1{font-size:clamp(1.3rem,3vw,1.8rem);font-weight:800;letter-spacing:-.02em;margin-top:6px}
+#panel-twentytwo .viewer{display:flex;justify-content:center;width:100%}
+#panel-twentytwo .book{position:relative;width:min(940px,97vw);aspect-ratio:200/130;perspective:2800px}
+#panel-twentytwo .leaf{position:absolute;top:0;right:0;width:50%;height:100%;transform-style:preserve-3d;transform-origin:left center;transition:transform .95s cubic-bezier(.42,.04,.18,1)}
+#panel-twentytwo .leaf.flipped{transform:rotateY(-180deg)}
+#panel-twentytwo .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:var(--paper);box-shadow:inset 0 0 60px rgba(0,0,0,.05)}
+#panel-twentytwo .face.back{transform:rotateY(180deg)}
+#panel-twentytwo .face .pg{position:absolute;inset:0;padding:7.5% 8%;display:flex;flex-direction:column;color:var(--ink)}
+#panel-twentytwo .face.front{border-left:1px solid rgba(0,0,0,.06);background-image:linear-gradient(90deg,rgba(0,0,0,.10),transparent 7%)}
+#panel-twentytwo .face.back{border-right:1px solid rgba(0,0,0,.06);background-image:linear-gradient(270deg,rgba(0,0,0,.10),transparent 7%)}
+#panel-twentytwo .folio{position:absolute;bottom:3.2%;font-family:var(--sans);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+#panel-twentytwo .face.front .folio{right:8%}
+#panel-twentytwo .face.back .folio{left:8%}
+#panel-twentytwo .desk{position:absolute;top:0;left:0;width:50%;height:100%;z-index:0;background:radial-gradient(120% 90% at 100% 50%,rgba(0,0,0,.35),transparent 70%)}
+#panel-twentytwo .kick{font-family:var(--sans);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:800}
+#panel-twentytwo .rule{height:2px;background:var(--green);width:46px;margin:10px 0 14px}
+#panel-twentytwo .logo{height:20px;width:auto}
+#panel-twentytwo .serif{font-family:var(--serif)}
+#panel-twentytwo .portrait{position:relative;background:linear-gradient(160deg,#2C5641,#0A3120);border-radius:4px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
+#panel-twentytwo .portrait svg{width:62%;opacity:.4}
+#panel-twentytwo .portrait .cap{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-family:var(--sans);font-size:7.5px;letter-spacing:.08em;color:rgba(251,250,242,.7);text-transform:uppercase}
+#panel-twentytwo .cover{background:
+      radial-gradient(62% 46% at 50% 44%,rgba(255,198,41,.32),transparent 62%),
+      radial-gradient(130% 70% at 50% 118%,rgba(255,198,41,.2),transparent 60%),
+      radial-gradient(90% 60% at 15% 8%,rgba(31,164,99,.16),transparent 55%),
+      linear-gradient(165deg,#1FA463,#082A1C)!important;color:var(--paper);overflow:hidden}
+#panel-twentytwo .cover .pg{display:block!important;padding:0!important;position:absolute;inset:0}
+#panel-twentytwo .cover::after{content:"";position:absolute;inset:9px;border:1px solid rgba(255,198,41,.4);border-radius:3px;pointer-events:none;z-index:6}
+#panel-twentytwo .cover .topbar{position:absolute;top:0;left:0;right:0;background:var(--gold);color:#147A4A;text-align:center;font-weight:900;font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:5px;z-index:7}
+#panel-twentytwo .cover .masthead{position:absolute;top:5.5%;left:0;right:0;text-align:center;z-index:5}
+#panel-twentytwo .cover .masthead h1{font-family:var(--sans);font-weight:900;font-size:clamp(2.7rem,9.5vw,4.8rem);letter-spacing:-.045em;color:#FFD23F;line-height:.78;text-shadow:0 5px 26px rgba(0,0,0,.45)}
+#panel-twentytwo .cover .masthead span{display:block;font-weight:800;font-size:clamp(7px,1.4vw,10px);letter-spacing:.3em;text-transform:uppercase;color:var(--paper);margin-top:5px}
+#panel-twentytwo .cover .issue{position:absolute;top:6%;right:8%;font-size:7px;letter-spacing:.12em;color:rgba(251,250,242,.8);z-index:6;text-align:right;line-height:1.5}
+#panel-twentytwo .cover .scene{position:absolute;top:19%;left:0;right:0;bottom:21%;display:flex;align-items:center;justify-content:center;z-index:2}
+#panel-twentytwo .cover .scene svg{height:100%;width:auto;max-width:94%}
+#panel-twentytwo .cover .figcap{position:absolute;left:7%;bottom:30%;writing-mode:vertical-rl;transform:rotate(180deg);font-size:6.5px;letter-spacing:.12em;color:rgba(251,250,242,.75);z-index:3;text-transform:uppercase}
+#panel-twentytwo .cover .flash{position:absolute;top:20.5%;left:5.5%;width:33%;z-index:5;font-family:var(--serif);font-style:italic;font-size:clamp(9px,1.9vw,12px);color:#fff;line-height:1.25;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+#panel-twentytwo .cover .flash span{display:block;font-style:normal;font-family:var(--sans);font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-top:5px}
+#panel-twentytwo .cover .teasers{position:absolute;top:20.5%;right:5%;width:31%;display:flex;flex-direction:column;gap:11px;text-align:right;z-index:5}
+#panel-twentytwo .cover .teasers div{font-size:7px;line-height:1.45;color:rgba(251,250,242,.86);font-weight:600}
+#panel-twentytwo .cover .teasers b{display:block;color:var(--gold);font-size:8px;margin-top:1px}
+#panel-twentytwo .cover .headline{position:absolute;left:6.5%;bottom:12.5%;font-family:var(--sans);font-weight:900;font-size:clamp(2.1rem,7vw,3.7rem);letter-spacing:-.035em;line-height:.82;color:#fff;z-index:5;text-shadow:0 5px 22px rgba(0,0,0,.5)}
+#panel-twentytwo .cover .headline em{font-style:normal;color:#FFD23F}
+#panel-twentytwo .cover .dek{position:absolute;left:7%;right:30%;bottom:7.5%;font-family:var(--serif);font-size:clamp(8px,1.6vw,10px);color:rgba(251,250,242,.92);line-height:1.3;z-index:5}
+#panel-twentytwo .cover .bottombar{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:5px 9px 6px;font-size:6.5px;letter-spacing:.06em;color:rgba(251,250,242,.7);z-index:5}
+#panel-twentytwo .cover .barcode{display:inline-block;width:44px;height:13px;background:repeating-linear-gradient(90deg,#FBFAF2 0 1px,transparent 1px 3px)}
+#panel-twentytwo .credits .pg{justify-content:center}
+#panel-twentytwo .credits .big{font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,2.4vw,1.6rem);line-height:1.4;color:var(--green)}
+#panel-twentytwo .credits .meta{margin-top:auto;font-size:9px;color:var(--ink-soft);line-height:1.7;letter-spacing:.02em}
+#panel-twentytwo .toc h2{font-family:var(--serif);font-size:clamp(1.4rem,2.8vw,1.9rem);color:var(--ink);font-weight:600}
+#panel-twentytwo .toc .row{display:flex;gap:10px;align-items:baseline;border-bottom:1px solid var(--line);padding:7px 0;font-size:clamp(.7rem,1.4vw,.86rem)}
+#panel-twentytwo .toc .row b{color:var(--gold);font-family:var(--sans);font-weight:800;min-width:22px}
+#panel-twentytwo .toc .row .t{flex:1;font-weight:600}
+#panel-twentytwo .toc .row .pp{color:var(--ink-soft);font-family:var(--sans);font-size:.8em}
+#panel-twentytwo .opener .pg{justify-content:flex-start}
+#panel-twentytwo .opener h2{font-family:var(--serif);font-size:clamp(1.5rem,3.2vw,2.3rem);line-height:1.08;color:var(--ink);font-weight:600;margin-bottom:8px}
+#panel-twentytwo .opener .stand{font-family:var(--serif);font-size:clamp(.82rem,1.7vw,1.05rem);line-height:1.5;color:#3A5246}
+#panel-twentytwo .opener .body{font-family:var(--serif);font-size:clamp(.72rem,1.45vw,.92rem);line-height:1.6;color:#3A5246;margin-top:10px}
+#panel-twentytwo .opener .body p{margin-bottom:8px}
+#panel-twentytwo .dropcap::first-letter{font-family:var(--serif);font-weight:600;font-size:3.1em;float:left;line-height:.7;padding:6px 8px 0 0;color:var(--green)}
+#panel-twentytwo .who{height:100%;display:flex;flex-direction:column}
+#panel-twentytwo .who .hero{position:relative;width:100%;height:46%;border-radius:4px;overflow:hidden;background:linear-gradient(160deg,#2C5641,#0A3120);display:flex;align-items:flex-end;flex:none}
+#panel-twentytwo .who .hero>svg{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:40%;opacity:.42}
+#panel-twentytwo .who .hero .cap{position:absolute;top:8px;right:10px;font-family:var(--sans);font-size:7px;letter-spacing:.08em;color:rgba(251,250,242,.6);text-transform:uppercase;z-index:2}
+#panel-twentytwo .who .hero .ovl{position:relative;z-index:2;width:100%;padding:16px 14px 12px;background:linear-gradient(transparent,rgba(8,42,28,.9))}
+#panel-twentytwo .who .hero .role{font-family:var(--sans);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800}
+#panel-twentytwo .who .hero .name{font-family:var(--serif);font-size:clamp(1.3rem,2.8vw,1.9rem);font-weight:600;color:#fff;line-height:1;margin-top:5px}
+#panel-twentytwo .who .cred{font-size:clamp(.58rem,1.2vw,.76rem);color:var(--ink-soft);margin-top:11px;line-height:1.4;font-weight:600}
+#panel-twentytwo .who .text{font-family:var(--serif);font-size:clamp(.7rem,1.4vw,.9rem);line-height:1.55;color:#3A5246;margin-top:9px}
+#panel-twentytwo .who .quote{font-family:var(--serif);font-style:italic;font-size:clamp(.98rem,2.1vw,1.32rem);color:var(--green);line-height:1.3;margin-top:auto;border-top:1px solid var(--line);padding-top:12px}
+#panel-twentytwo .who .quote b{display:block;font-style:normal;font-family:var(--sans);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-top:9px}
+#panel-twentytwo .council h2{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,1.8rem);color:var(--ink);font-weight:600;margin-bottom:2%}
+#panel-twentytwo .council .grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:5% 7%}
+#panel-twentytwo .council .m .portrait{height:62%;width:100%;margin-bottom:7px}
+#panel-twentytwo .council .m .nm{font-family:var(--serif);font-size:clamp(.8rem,1.6vw,1.05rem);font-weight:600;color:var(--ink);line-height:1.05}
+#panel-twentytwo .council .m .rl{font-size:clamp(.55rem,1.15vw,.72rem);color:var(--ink-soft);margin-top:3px;line-height:1.3}
+#panel-twentytwo .divider{background:linear-gradient(165deg,#147A4A,#0C3B26)!important;color:var(--paper)}
+#panel-twentytwo .divider .pg{justify-content:center;align-items:flex-start}
+#panel-twentytwo .divider .massive{font-weight:900;letter-spacing:-.04em;line-height:.85;font-size:clamp(2.4rem,7vw,4.2rem)}
+#panel-twentytwo .divider .massive em{font-style:normal;color:var(--gold)}
+#panel-twentytwo .divider p{font-family:var(--serif);color:rgba(251,250,242,.8);font-size:clamp(.78rem,1.6vw,1rem);margin-top:14px;line-height:1.45;max-width:94%}
+#panel-twentytwo .roster h2{font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,1.8rem);color:var(--ink);font-weight:600}
+#panel-twentytwo .roster .note{font-size:9px;color:var(--ink-soft);margin:4px 0 10px}
+#panel-twentytwo .roster .cols{flex:1;columns:2;column-gap:18px;font-size:clamp(.62rem,1.3vw,.8rem)}
+#panel-twentytwo .roster .r{break-inside:avoid;display:flex;gap:7px;padding:4.5px 0;border-bottom:1px dotted var(--line);color:#3A5246}
+#panel-twentytwo .roster .r b{color:var(--gold);font-family:var(--sans);font-weight:800;min-width:18px;font-size:.86em}
+#panel-twentytwo .feat{height:100%;position:relative}
+#panel-twentytwo .feat .rank{position:absolute;top:-2%;right:-1%;font-family:var(--sans);font-weight:900;font-size:clamp(4rem,11vw,7rem);color:rgba(15,71,48,.1);line-height:.7;letter-spacing:-.05em}
+#panel-twentytwo .feat .portrait{width:46%;height:46%;margin-bottom:6%}
+#panel-twentytwo .feat .role{font-family:var(--sans);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}
+#panel-twentytwo .feat .name{font-family:var(--serif);font-size:clamp(1.4rem,3vw,2.1rem);font-weight:600;color:var(--ink);line-height:1;margin-top:5px}
+#panel-twentytwo .feat .hl{font-family:var(--serif);font-size:clamp(.78rem,1.6vw,1.02rem);line-height:1.5;color:#3A5246;margin-top:12px;max-width:96%}
+#panel-twentytwo .feat .stats{margin-top:auto;display:flex;gap:8%;border-top:1px solid var(--line);padding-top:10px}
+#panel-twentytwo .feat .stats .s label{display:block;font-family:var(--sans);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+#panel-twentytwo .feat .stats .s .v{font-family:var(--sans);font-weight:800;color:var(--ink);font-size:clamp(.7rem,1.4vw,.9rem);margin-top:3px}
+#panel-twentytwo .feat .stats .s .v.todo{color:var(--gold);font-weight:700;font-size:.72rem}
+#panel-twentytwo .more h2{font-family:var(--serif);font-size:clamp(1.2rem,2.4vw,1.6rem);color:var(--ink);font-weight:600;margin-bottom:3%}
+#panel-twentytwo .more .grid{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:5% 6%}
+#panel-twentytwo .more .m .portrait{height:56%;width:100%;margin-bottom:6px}
+#panel-twentytwo .more .m .nm{font-family:var(--serif);font-weight:600;color:var(--ink);font-size:clamp(.72rem,1.5vw,.95rem)}
+#panel-twentytwo .more .m .hl{font-size:clamp(.55rem,1.15vw,.72rem);color:var(--ink-soft);margin-top:3px;line-height:1.3}
+#panel-twentytwo .closing .pg{justify-content:center}
+#panel-twentytwo .closing .big{font-family:var(--serif);font-size:clamp(1.4rem,3vw,2.1rem);color:var(--ink);font-weight:600;line-height:1.1}
+#panel-twentytwo .closing .big em{font-style:italic;color:var(--green2)}
+#panel-twentytwo .backcover{background:linear-gradient(165deg,#147A4A,#0C3B26)!important;color:var(--paper)}
+#panel-twentytwo .backcover .pg{justify-content:space-between;align-items:flex-start}
+#panel-twentytwo .backcover .tl{font-family:var(--serif);font-size:clamp(1.3rem,2.8vw,1.9rem);line-height:1.2;margin-top:auto}
+#panel-twentytwo .backcover .tl em{font-style:normal;color:var(--gold)}
+#panel-twentytwo .backcover .ft{font-size:9px;letter-spacing:.12em;color:rgba(251,250,242,.7);text-transform:uppercase}
+#panel-twentytwo .controls{display:flex;align-items:center;gap:14px;margin-top:24px}
+#panel-twentytwo .controls button{background:#5FD38A;color:#082A1C;border:none;font-weight:700;font-size:.88rem;padding:11px 20px;border-radius:9px;cursor:pointer;transition:.2s;font-family:inherit}
+#panel-twentytwo .controls button:hover{transform:translateY(-2px)}
+#panel-twentytwo .controls button:disabled{opacity:.3;cursor:default;transform:none}
+#panel-twentytwo .counter{font-family:ui-monospace,monospace;font-size:.78rem;color:rgba(244,242,233,.66);min-width:110px;text-align:center}
+#panel-twentytwo .hint{margin-top:12px;font-size:.78rem;color:rgba(244,242,233,.55);max-width:60ch;text-align:center;line-height:1.5}
+#panel-letter{
+    --bg:#F4F3ED;--green-br:#2336E0;--gold:#D9A93A;
+    --cream:#15161A;--cream-dim:#4A4C55;
+    --paper:#FBFAF4;--ink:#15161A;--ink-dim:#4A4C55;
+  }
+#panel-letter *{box-sizing:border-box;margin:0;padding:0}
+#panel-letter{background:radial-gradient(1000px 700px at 70% -10%,rgba(35,54,224,.14),transparent 60%),var(--bg);color:var(--cream);font-family:"Inter",sans-serif;min-height:100vh;padding:38px 18px 80px}
+#panel-letter .back{position:fixed;top:18px;left:18px;z-index:20;color:var(--cream-dim);text-decoration:none;font-size:.85rem;font-weight:600;border:1px solid #CFCEC2;padding:8px 14px;border-radius:8px}
+#panel-letter .back:hover{color:var(--cream);border-color:var(--cream)}
+#panel-letter .wrap{max-width:720px;margin:0 auto}
+#panel-letter .top{text-align:center;margin-bottom:24px}
+#panel-letter .eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--green-br);font-weight:700}
+#panel-letter .top h1{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800;letter-spacing:-.025em;margin-top:8px}
+#panel-letter .top p{color:var(--cream-dim);font-size:.95rem;margin-top:10px}
+#panel-letter .tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:24px 0}
+#panel-letter .tabs button{background:rgba(20,22,30,.05);color:var(--cream-dim);border:1px solid #CFCEC2;padding:10px 16px;border-radius:999px;font-family:inherit;font-weight:600;font-size:.86rem;cursor:pointer;transition:.2s}
+#panel-letter .tabs button:hover{color:var(--cream)}
+#panel-letter .tabs button.on{background:var(--green-br);color:#EAE9E0;border-color:var(--green-br)}
+#panel-letter .sheet{background:var(--paper);color:var(--ink);border-radius:14px;padding:clamp(28px,5vw,56px);box-shadow:0 40px 90px rgba(20,22,30,.16);position:relative;overflow:hidden}
+#panel-letter .sheet::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--gold),#C99A33)}
+#panel-letter .masthead{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #CFCEC2;padding-bottom:14px;margin-bottom:26px}
+#panel-letter .masthead .name{font-weight:800;letter-spacing:.02em;font-size:1.05rem;color:var(--ink)}
+#panel-letter .masthead .yr{font-family:ui-monospace,monospace;font-size:.78rem;color:var(--ink-dim);letter-spacing:.1em}
+#panel-letter .ed{display:none}
+#panel-letter .ed.on{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#panel-letter .ed .kicker{font-family:ui-monospace,monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green-br);font-weight:700}
+#panel-letter .ed h2{font-family:"Newsreader",serif;font-weight:500;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.15;margin:8px 0 22px;color:#15161A;letter-spacing:-.01em}
+#panel-letter .ed p{font-family:"Newsreader",serif;font-size:1.08rem;line-height:1.72;color:#4A4C55;margin-bottom:16px}
+#panel-letter .ed .salut{font-weight:500}
+#panel-letter .signoff{margin-top:26px;border-top:1px solid #CFCEC2;padding-top:18px}
+#panel-letter .signoff .sig{font-family:"Caveat",cursive;font-size:2rem;color:#15161A;line-height:.9}
+#panel-letter .signoff .who{font-size:.86rem;color:var(--ink-dim);margin-top:6px;font-weight:600}
+#panel-letter .note{text-align:center;color:var(--cream-dim);font-size:.8rem;margin-top:20px}
+
+/* readability on the 5 V3 panels */
+.overlay .psw .c{background:#fff;border:1px solid #CFCEC2}
+.overlay .psw .c p{color:#15161A}
+.overlay .psw .c.p h3{color:#E8442E}.overlay .psw .c.s h3{color:#2336E0}.overlay .psw .c.w h3{color:#9A7B1E}
+.overlay .meta span{color:#4A4C55;border:1px solid #CFCEC2}
+.overlay .ovclose{background:#fff;color:#15161A;border:1px solid #CFCEC2}.overlay .ovclose:hover{border-color:#15161A}
+/* 22 Under 22 -> TETR brand */
+#panel-twentytwo{--bg:#0C3B26;--cream:#F4F2E9;--cream-dim:rgba(244,242,233,.66);--cream-faint:rgba(244,242,233,.4);--gold:#FFC629;--green-br:#5FD38A;--green:#1FA463;--yellow:#FFC629;--line:rgba(244,242,233,.18);--paper:#F4F2E9;--ink:#14140F;--ink-soft:#566860;background:#0C3B26;color:#F4F2E9;min-height:auto}
+#panel-twentytwo .magpsw .c,#panel-twentytwo .psw .c{background:rgba(255,255,255,.06);border:1px solid rgba(244,242,233,.2)}
+#panel-twentytwo .psw .c p{color:#F4F2E9}
+#panel-twentytwo .psw .c.p h3{color:#FFC629}#panel-twentytwo .psw .c.s h3{color:#5FD38A}#panel-twentytwo .psw .c.w h3{color:#FFC629}
+#panel-twentytwo .head h1{color:#F4F2E9}#panel-twentytwo .head .eyebrow{color:#5FD38A}
+/* === 22 Under 22: keep ONLY the flip book green; rest in the blue/white/paper palette === */
+#panel-twentytwo{background:radial-gradient(1000px 700px at 70% -10%,rgba(35,54,224,.12),transparent 60%),#F4F3ED;color:#15161A}
+#panel-twentytwo .back{color:#4A4C55;border:1px solid #CFCEC2;background:rgba(255,255,255,.9)}
+#panel-twentytwo .back:hover{color:#15161A;border-color:#15161A}
+#panel-twentytwo .head h1{color:#15161A}
+#panel-twentytwo .head .eyebrow{color:#2336E0}
+#panel-twentytwo .magpsw .c,#panel-twentytwo .psw .c{background:#fff;border:1px solid #CFCEC2}
+#panel-twentytwo .psw .c p{color:#15161A}
+#panel-twentytwo .psw .c.p h3{color:#E8442E}#panel-twentytwo .psw .c.s h3{color:#2336E0}#panel-twentytwo .psw .c.w h3{color:#9A7B1E}
+#panel-twentytwo .controls button{background:#2336E0;color:#fff}
+#panel-twentytwo .controls button:hover{background:#15161A}
+#panel-twentytwo .counter{color:#4A4C55}
+#panel-twentytwo .hint{color:#4A4C55}
+#panel-twentytwo .swipehint{color:#4A4C55!important}
+/* all six open as a popup over the dimmed page */
+.overlay{background:rgba(16,17,22,.78);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:clamp(16px,4vw,46px) clamp(12px,3vw,30px)}
+.overlay .ideapanel{max-width:980px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.5)}
+.overlay .ovclose{position:fixed;top:16px;left:16px;z-index:260}
+
+
+/* ===== Section 2 rebuild: the India term, as I'd shape it ===== */
+.billband{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin:38px 0 16px;display:flex;align-items:center;gap:12px}
+.billband::after{content:"";flex:1;height:1px;background:var(--line)}
+.billgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:760px){.billgrid{grid-template-columns:1fr}}
+.billcard{position:relative;text-align:left;cursor:pointer;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 28px;display:grid;grid-template-columns:auto 1fr auto;gap:5px 22px;align-items:center;font-family:var(--sans);transition:transform .25s cubic-bezier(.2,.9,.3,1.2),box-shadow .25s,border-color .25s}
+.billcard:hover{transform:translateY(-3px);box-shadow:0 18px 42px rgba(21,22,26,.1);border-color:var(--ink)}
+.billcard .bno{grid-column:1;grid-row:1/3;align-self:center;font-family:var(--mono);font-weight:700;font-size:15px;color:var(--cobalt)}
+.billname{grid-column:2;grid-row:1;font-weight:800;font-size:19px;font-stretch:108%;letter-spacing:-.01em;color:var(--ink)}
+.billdesc{grid-column:2;grid-row:2;font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
+.billopen{grid-column:3;grid-row:1/3;align-self:center;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;transition:color .2s}
+.billcard:hover .billopen{color:var(--cobalt)}
+.cohort{position:relative;overflow:hidden;margin-top:46px;background:var(--ink);color:var(--paper);border-radius:20px;padding:42px 44px}
+.cohort-wave{
+  position:absolute;top:26px;right:30px;font-size:42px;line-height:1;cursor:pointer;
+  user-select:none;transform-origin:75% 85%;animation:wave 2.6s ease-in-out infinite;
+}
+.cohort-wave:hover{animation-duration:.9s}
+@keyframes wave{
+  0%,60%,100%{transform:rotate(0deg)}
+  66%{transform:rotate(16deg)}72%{transform:rotate(-12deg)}
+  78%{transform:rotate(16deg)}84%{transform:rotate(-8deg)}90%{transform:rotate(10deg)}
+}
+@media(max-width:680px){.cohort-wave{top:20px;right:20px;font-size:34px}}
+@media(max-width:680px){.cohort{padding:54px 24px 30px}}
+.cohort-eyebrow{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#FFD23F;margin-bottom:14px}
+.cohort-h{font-size:clamp(26px,3vw,36px);font-stretch:110%;letter-spacing:-.01em;line-height:1.05;color:var(--paper);margin-bottom:14px}
+.cohort p{font-size:16px;line-height:1.62;color:#E7E7E2;max-width:680px}
+
+/* ===== clickable affordances: make tappable things obviously tappable ===== */
+/* small icon clickables get a gentle idle motion so touch users see them */
+@keyframes idleBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes idlePulse{0%,100%{opacity:.45}50%{opacity:1}}
+#plane{animation:idleBob 2.6s ease-in-out infinite}
+#plane:hover{animation:none}
+.mma .glove{animation:idleBob 2.9s ease-in-out infinite}
+.mma .glove:hover{animation:none}
+#egg-dot{animation:idlePulse 2.4s ease-in-out infinite}
+#egg-dot:hover{animation:none;opacity:1;transform:scale(1.18)}
+/* the lab/idea cards: the "Open draft" arrow nudges on hover, like the model */
+.billcard .billopen{transition:color .2s,transform .25s cubic-bezier(.2,.9,.3,1.2)}
+@media(hover:hover){.billcard:hover .billopen{transform:translate(3px,-3px)}}
+/* on touch the cards keep a faint always-on cue that they open */
+@media(hover:none){
+  .billcard .billopen{color:var(--cobalt)}
+  @keyframes tapNudge{0%,100%{transform:translate(0,0)}50%{transform:translate(3px,-3px)}}
+  .billcard .billopen{animation:tapNudge 2.4s ease-in-out infinite}
+}
+/* one-time "wink" when an interactive card scrolls into view */
+@keyframes clickCue{0%{transform:translateY(0)}28%{transform:translateY(-7px)}62%{transform:translateY(0)}80%{transform:translateY(-2px)}100%{transform:translateY(0)}}
+.click-cue{animation:clickCue .7s cubic-bezier(.2,.8,.2,1)}
+/* a clearer hover lift on the receipts/track cards (they're not links, but feel alive) */
+@media (prefers-reduced-motion: reduce){
+  #plane,.mma .glove,#egg-dot,.click-cue,.billcard .billopen{animation:none!important}
+}
+
+/* ===== iOS / in-app webview hardening ===== */
+/* reliable taps: kill the 300ms delay + double-tap-zoom stealing the tap,
+   and make children pass the tap up to the button */
+.billcard,.draft,#plane,#egg-dot,.mma .glove,#cohort-wave,#stamp-btn,.ovclose,
+nav a,.btn{touch-action:manipulation;-webkit-tap-highlight-color:rgba(35,54,224,.18)}
+.billcard *,.draft *{pointer-events:none}
+/* clickable emoji/eggs need a real hit area for fingers */
+#plane,#egg-dot{display:inline-block;padding:6px;margin:-6px;min-width:30px;min-height:30px;text-align:center}
+#cohort-wave,.mma .glove{padding:6px}
+/* panels: never trap height at exactly 100vh inside an in-app browser where the
+   toolbar shrinks the viewport — let them grow with content */
+.overlay .ideapanel,#panel-twentytwo,#panel-letter{min-height:auto!important}
+/* the dimmed backdrop tap-to-close shouldn't be blocked by the blur layer */
+.overlay{-webkit-tap-highlight-color:transparent}
+/* show the right egg hint per device: keyboard hint on desktop, tap hint on touch */
+.hint-tap{display:none}
+@media(hover:none),(pointer:coarse){.hint-kbd{display:none}.hint-tap{display:inline}}
+.hint-tap b{color:var(--cobalt)}
+
+/* collapsible content blocks are open by default (desktop/tablet show everything,
+   no toggle). On phone, JS removes [open] so they collapse; tap re-opens. */
+.ob-more>summary,.tc-more>summary{display:none}
+
+/* ===== the six ideas as a swipe gallery (mobile only) ===== */
+.pitch-banner{display:none}
+@media(max-width:760px){
+  /* frame the section so it clearly reads as THE pitch, not just another block */
+  #term{background:var(--paper)}
+  .pitch-banner{
+    display:block;margin:30px 0 18px;padding:22px 22px 20px;border-radius:18px;
+    background:var(--ink);color:var(--paper);
+    position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(21,22,26,.18);
+  }
+  .pb-kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:#FFD23F;font-weight:700}
+  .pb-line{font-size:25px;font-stretch:112%;font-weight:850;letter-spacing:-.02em;line-height:1.08;margin-top:8px;color:#fff}
+  .pb-line b{color:#fff;border-bottom:3px solid var(--cobalt);padding-bottom:1px}
+  .pb-swipe{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#C9CAD3;display:flex;align-items:center;gap:8px;position:relative;z-index:1}
+  .pb-arrow{display:inline-block;animation:swipeHint 1.8s ease-in-out infinite}
+  @keyframes swipeHint{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+
+  /* the band labels become small chips that ride above the rail */
+  .ideas-rail .billband{margin:18px 0 10px;font-size:10px;color:var(--ink-soft)}
+  .ideas-rail .billband::after{opacity:.6}
+
+  /* horizontal scroll-snap rail: cards sit in a row, next one peeks */
+  .ideas-rail .billgrid{
+    display:flex;gap:14px;grid-template-columns:none;
+    overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    margin:0 -22px;padding:4px 22px 16px;
+    scrollbar-width:none;
+  }
+  .ideas-rail .billgrid::-webkit-scrollbar{display:none}
+
+  /* each idea card: fixed width so the next one peeks (~16% visible) */
+  .ideas-rail .billcard{
+    flex:0 0 80%;scroll-snap-align:center;
+    display:flex;flex-direction:column;gap:0;
+    padding:22px 22px 20px;min-height:230px;
+    border:1.5px solid var(--line);box-shadow:0 10px 26px rgba(21,22,26,.07);
+  }
+  .ideas-rail .billcard .bno{font-size:13px;margin-bottom:10px}
+  .ideas-rail .billcard .billname{font-size:21px;line-height:1.12;margin-bottom:10px}
+  .ideas-rail .billcard .billdesc{font-size:14px;line-height:1.55;flex:1}
+  .ideas-rail .billcard .billopen{
+    margin-top:16px;align-self:flex-start;color:var(--cobalt);
+    border-top:1px dashed var(--line);padding-top:12px;width:100%;
+  }
+
+  /* dot indicator (built by JS), one dot per card, active dot wider */
+  .rail-dots{display:flex;justify-content:center;gap:7px;margin:2px 0 4px}
+  .rail-dots i{width:7px;height:7px;border-radius:99px;background:var(--line);transition:width .25s,background .25s}
+  .rail-dots i.on{width:22px;background:var(--cobalt)}
+}
+
+/* ===== mobile: shorten the scroll (skim by default, depth on tap) ===== */
+/* 90-day plan: each column shows label + one line; tap to read the rest */
+.col-lead{display:none}
+.col-more>summary{display:none}
+@media(max-width:760px){
+  /* tighten the dead space between blocks on a phone */
+  section{padding:54px 0}
+  #drafts{padding:54px 0}
+  .sec-head{margin-bottom:30px}
+  .billband{margin:26px 0 14px}
+  .cohort{margin-top:32px}
+  .plan{padding:34px 22px}
+  .plan .cols{gap:12px;margin-top:24px}
+  .plan .col{padding:18px 18px}
+  /* show the one-line lead, hide the full paragraph behind a tap */
+  .col-lead{display:block;font-size:13.5px;color:#C9CAD3;margin-top:2px}
+  .col-more{margin-top:12px;border-top:1px dashed rgba(255,255,255,.18);padding-top:10px}
+  .col-more>summary{
+    display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:#FF8A75;font-weight:700;
+  }
+  .col-more>summary::-webkit-details-marker{display:none}
+  .col-more>summary::after{content:"＋";margin-left:auto;font-size:15px;line-height:1;color:#FF8A75}
+  .col-more[open]>summary::after{content:"－"}
+  .col-more>summary:active{opacity:.7}
+  .col-more>p,.col-more>.out{margin-top:10px}
+  .col-more .out{margin-top:12px}
+
+  /* "Three things I noticed" + Track Record: collapse like the 90-day plan.
+     Heading (and the rule line, for observations) stay; the rest taps open. */
+  .ob-more,.tc-more{margin-top:12px}
+  /* when closed on mobile, hide everything except the summary toggle */
+  .col-more:not([open])>*:not(summary),
+  .ob-more:not([open])>*:not(summary),
+  .tc-more:not([open])>*:not(summary){display:none}
+  .ob-more>summary,.tc-more>summary{
+    display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--cobalt);font-weight:700;
+  }
+  .ob-more>summary::-webkit-details-marker,.tc-more>summary::-webkit-details-marker{display:none}
+  .ob-more>summary::after,.tc-more>summary::after{content:"＋";margin-left:auto;font-size:15px;line-height:1;color:var(--cobalt)}
+  .ob-more[open]>summary::after,.tc-more[open]>summary::after{content:"－"}
+  .ob-more>summary:active,.tc-more>summary:active{opacity:.6}
+  .ob-more>p,.tc-more>p{margin-top:12px}
+  .tc-more>.so{margin-top:12px}
+  /* keep the rule line tight under the (now shorter) observation card */
+  .ob .so{margin-top:14px}
+}
+
+/* idea panels: collapse the long day-by-day schedule + lenses on mobile.
+   The .ext <details> wrapper is injected by JS ONLY on phone widths, so
+   desktop/tablet markup is never touched. */
+.overlay .ext{margin:0}
+.overlay .ext>summary{
+  display:flex;align-items:center;gap:10px;list-style:none;cursor:pointer;
+  margin:26px 0 0;padding:16px 18px;background:#fff;border:1px solid #CFCEC2;
+  border-radius:14px;font-weight:800;font-size:.92rem;color:#15161A;
+}
+.overlay .ext>summary::-webkit-details-marker{display:none}
+.overlay .ext>summary .x{margin-left:auto;font-size:1.2rem;line-height:1;color:#2336E0;transition:transform .2s}
+.overlay .ext[open]>summary{border-radius:14px 14px 0 0}
+.overlay .ext[open]>summary .x{transform:rotate(45deg)}
+.overlay .ext>summary:active{opacity:.75}
+
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="trail">✈</div>
+
+<nav aria-label="Page navigation">
+  <span class="brand" id="brand-egg" title="TETR">YS <b>→</b> TETR</span>
+  <a class="nl" href="#noticed">Noticed</a>
+  <a class="nl" href="#term">The Term</a>
+  <a class="nl" href="#track">Track Record</a>
+  <a class="nl" href="#plan">First 90 Days</a>
+  <a class="nl" href="#cta">Boarding</a>
+  <a class="navcta" href="https://calendly.com/hello-yoshasanghvi" target="_blank" rel="noopener">Let's connect ↗</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <span class="float-stamp" data-depth="0.7" style="top:20%;right:6%;rotate:9deg">SIN ✓</span>
+  <span class="float-stamp circle red" data-depth="1.1" style="top:76%;right:11%;rotate:-14deg">ACC<br>2026</span>
+
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Application · Student Experience Team</span>
+      <h1>
+        <span class="line"><span>Seven countries.</span></span>
+        <span class="line"><span>Fourteen flights.</span></span>
+        <span class="line"><span>One job: make it feel like home.</span></span>
+      </h1>
+      <p class="lede">I'm <strong>Yosha Sanghvi</strong>. For years my job has come down to one thing: take a big group of people and make every one of them feel looked after. This page is my first go at doing that for Tetr.</p>
+      <div class="ctas">
+        <a class="btn" href="#term">Walk through a term ↓</a>
+        <a class="btn ghost" href="#cta">Skip to boarding</a>
+      </div>
+      <p class="hint"><span class="hint-kbd">psst, try typing <kbd>T</kbd><kbd>E</kbd><kbd>T</kbd><kbd>R</kbd></span><span class="hint-tap">psst — there are 3 hidden things to find. tap the <b>YS → TETR</b> logo to start.</span></p>
+    </div>
+
+    <div class="board" aria-label="Departure board">
+      <div class="row">
+        <span class="label">Flight</span>
+        <span class="val">YS·2026 <span id="plane" title="tap me. a few times.">✈</span></span>
+      </div>
+      <div class="row">
+        <span class="label">Passenger</span>
+        <span class="val">SANGHVI / YOSHA</span>
+      </div>
+      <div class="row">
+        <span class="label">Destination</span>
+        <span class="flap-line" id="flap-dest" aria-live="off"></span>
+      </div>
+      <div class="row">
+        <span class="label">Status</span>
+        <span class="val blink">NOW BOARDING</span>
+      </div>
+      <div class="foot"><span>7 countries · 1 cohort</span><span>gate: this page</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TICKER ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Dubai → Mumbai → Singapore → Accra → New York → Buenos Aires → Madrid →</span>
+    <span>graded on real revenue · learning by doing · 60 nationalities · no campus to lean on ·</span>
+    <span>Dubai → Mumbai → Singapore → Accra → New York → Buenos Aires → Madrid →</span>
+    <span>graded on real revenue · learning by doing · 60 nationalities · no campus to lean on ·</span>
+  </div>
+</div>
+
+<!-- ============ OBSERVATIONS ============ -->
+<section id="noticed">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">01 · Before the ideas</span>
+      <h2 class="kin">Three things I noticed about Tetr</h2>
+      <p>Before I wrote any of this, I read everything about Tetr. Three things stuck. Each one tells you what the job really takes, and they shaped everything below.</p>
+    </div>
+    <div class="obs">
+      <div class="ob">
+        <div class="num">Noticed / 01</div>
+        <h3>No campus means no defaults</h3>
+        <details class="ob-more" open><summary>Read more</summary>
+        <p>A normal college gets its traditions for free, because the buildings never move. Tetr's campuses move every term. So anything you want students to hold onto has to fit in a carry-on.</p>
+        </details>
+        <div class="so">→ rule: everything fits in hand luggage</div>
+      </div>
+      <div class="ob">
+        <div class="num">Noticed / 02</div>
+        <h3>Grading on revenue makes failure public</h3>
+        <details class="ob-more" open><summary>Read more</summary>
+        <p>When you grade on revenue, a flop happens in front of everyone. The whole cohort sees the number. That's a bold way to run a school, and it means the help a student needs has to follow them, wherever they end up.</p>
+        </details>
+        <div class="so">→ rule: care must cross borders with the cohort</div>
+      </div>
+      <div class="ob">
+        <div class="num">Noticed / 03</div>
+        <h3>Every cohort relearns the last one's lessons</h3>
+        <details class="ob-more" open><summary>Read more</summary>
+        <p>Every cohort lands needing the same answers, which SIM to buy, which doctor to trust, which landlord to avoid. The early ones learned it all the hard way, and most of what they figured out is stuck in old group chats nobody new can get to.</p>
+        </details>
+        <div class="so">→ rule: knowledge must outlive the batch that earned it</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- flight arc divider -->
+<div class="arc-div" aria-hidden="true">
+  <svg viewBox="0 0 1200 140" preserveAspectRatio="none">
+    <path id="arcpath" class="dash" d="M -20 120 Q 600 -60 1220 120"/>
+  </svg>
+  <span class="plane-on-path" id="arc-plane" style="position:absolute;left:0;top:0">✈</span>
+</div>
+
+<!-- ============ THE TERM ============ -->
+<section id="term" class="bg0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">02 · The India term, as I'd shape it</span>
+      <h2 class="kin">I'd shape the term, and I'd be there for who's in it.</h2>
+      <p>It all comes back to one thing I really believe: you can't build something honest for a country you don't actually get. So before the cohort builds anything for India, I'd help them get to know the place first, how it looks, how it eats, how it does business, how it handles things when a plan falls apart. These six are where I'd start.</p>
+    </div>
+
+    <!-- mobile-only pitch banner: makes clear these six ARE the pitch -->
+    <div class="pitch-banner" aria-hidden="true">
+      <div class="pb-kicker">The pitch</div>
+      <div class="pb-line"><b>Six ideas</b> for the India term</div>
+      <div class="pb-swipe">Swipe to see them all <span class="pb-arrow">→</span></div>
+    </div>
+
+    <div class="ideas-rail">
+    <div class="billband">During the term</div>
+    <div class="billgrid">
+      <button class="billcard" data-open="seminar">
+        <span class="bno">01</span>
+        <span class="billname">Art History of India</span>
+        <span class="billdesc">You can't build for a country you've never really looked at, so this carries the cohort from India's cave paintings to the brands sitting on its shelves today.</span>
+        <span class="billopen">Open draft &#8599;</span>
+      </button>
+      <button class="billcard" data-open="taste">
+        <span class="bno">02</span>
+        <span class="billname">The Taste Lab</span>
+        <span class="billdesc">The fastest way into a culture runs through its stomach, so the cohort spends two days eating their way across India.</span>
+        <span class="billopen">Open draft &#8599;</span>
+      </button>
+      <button class="billcard" data-open="jugaad">
+        <span class="bno">03</span>
+        <span class="billname">The Jugaad Masterclass</span>
+        <span class="billdesc">A Shark Tank founder walks the cohort through how India actually does business, from the bargaining to the rules nobody bothers to write down.</span>
+        <span class="billopen">Open draft &#8599;</span>
+      </button>
+      <button class="billcard" data-open="improv">
+        <span class="bno">04</span>
+        <span class="billname">The Improv Lab</span>
+        <span class="billdesc">Selling is really just improv under pressure, so the cohort rehearses it for half a day with Tanmay Bhat.</span>
+        <span class="billopen">Open draft &#8599;</span>
+      </button>
+    </div>
+
+    <div class="billband">What it leaves behind</div>
+    <div class="billgrid">
+      <button class="billcard" data-open="twentytwo">
+        <span class="bno">05</span>
+        <span class="billname">TETR 22 Under 22</span>
+        <span class="billdesc">Twenty-two student founders in one magazine a year, giving a young school the kind of proof it doesn't have yet.</span>
+        <span class="billopen">Open draft &#8599;</span>
+      </button>
+      <button class="billcard" data-open="letter">
+        <span class="bno">06</span>
+        <span class="billname">The Young Founders' Letter</span>
+        <span class="billdesc">One honest letter a year about building young, written in a voice no brochure would ever allow.</span>
+        <span class="billopen">Open draft &#8599;</span>
+      </button>
+    </div>
+    </div><!-- /.ideas-rail -->
+
+    <div class="cohort rv">
+      <span class="cohort-wave" id="cohort-wave" title="hi.">👋</span>
+      <span class="cohort-eyebrow">The part that doesn't fit on a poster</span>
+      <h3 class="cohort-h">I'd be the cohort's person.</h3>
+      <p>The six ideas are the stuff you can put on a calendar. The people are the part you can't plan, and that part matters more to me. I'd know everyone by name, figure out what each of them needs, and be in the same cities they're in, so when something goes wrong at midnight, I'm already the person they call.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ TRACK RECORD ============ -->
+<section id="track">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">03 · The receipts</span>
+      <h2 class="kin">Where this thinking comes from</h2>
+      <p>None of this is theory. I've already done it in three jobs, and they were all really the same job: take a big group of people and make every single one feel taken care of.</p>
+    </div>
+    <div class="track">
+      <div class="tcard">
+        <div class="role">Director, Communications & Collaborations</div>
+        <h3>Madras Art Weekend</h3>
+        <details class="tc-more" open><summary>What I did &amp; how it reads onto Tetr</summary>
+        <p>I hosted thousands of guests across a whole city's worth of shows, talks and late nights. The real job was everything in between, keeping partners, venues and schedules lined up so a hundred moving parts reached each guest as one smooth night.</p>
+        <div class="so"><b>Reads onto Tetr:</b> 300 students across 7 cities is the same craft at a different altitude.</div>
+        </details>
+      </div>
+      <div class="tcard">
+        <div class="role">Brand Development</div>
+        <h3>Founders Connect</h3>
+        <details class="tc-more" open><summary>What I did &amp; how it reads onto Tetr</summary>
+        <p>I built the brand and the rooms for a founder community, and figured out what actually makes busy, ambitious people keep coming back after the shine wears off.</p>
+        <div class="so"><b>Reads onto Tetr:</b> your students are founders at eighteen. I know what they'll skip and what they'll queue for.</div>
+        </details>
+      </div>
+      <div class="tcard">
+        <div class="role">Earlier</div>
+        <h3>Viral &amp; Exclusive Connect</h3>
+        <details class="tc-more" open><summary>What I did &amp; how it reads onto Tetr</summary>
+        <p>This is where I learned how distribution really works: what makes someone share something, what makes them secretly want it, and how those two play off each other.</p>
+        <div class="so"><b>Reads onto Tetr:</b> everything on this page is built to be lived first and shared second. That order matters.</div>
+        </details>
+      </div>
+    </div>
+    <div class="mma" id="mma-card">
+      <p><strong style="font-stretch:110%">One more thing: I train MMA.</strong> Sounds like a hobby until you're running an event in a country you landed in two days ago and something blows up in front of everyone. That's when it pays off, because it's basically practice at staying calm when the plan falls apart. If Tetr ever starts a Fight Crew, it's got its first coach.</p>
+      <span class="glove" id="glove" title="go on, poke the fighter">🥊</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIRST 90 DAYS ============ -->
+<section id="plan">
+  <div class="wrap">
+    <div class="plan">
+      <span class="eyebrow">04 · From page to plan</span>
+      <h2>The first ninety days</h2>
+      <p class="l">The ideas are the easy part. The hard part is the order you do them in. I'd listen before I build anything, do the cheapest wins first so people trust it, and make sure every experience keeps working after the cohort moves countries, even when I'm not around.</p>
+      <div class="cols">
+        <div class="col">
+          <div class="days">Days 1-30</div>
+          <h4>Listen</h4>
+          <p class="col-lead">Travel with the cohort and map the term hour by hour.</p>
+          <details class="col-more" open>
+            <summary>Read the plan</summary>
+            <p>I'd travel with the current cohort and sit in the lobby at midnight, where the honest stuff comes out. I'd map the term hour by hour, then talk to thirty students and everyone running things on the ground.</p>
+            <div class="out"><b>Output</b>A ranked list of what actually hurts, straight from what people told me.</div>
+          </details>
+        </div>
+        <div class="col">
+          <div class="days">Days 31-60</div>
+          <h4>Ship small</h4>
+          <p class="col-lead">Run the two cheapest ideas first and test them for real.</p>
+          <details class="col-more" open>
+            <summary>Read the plan</summary>
+            <p>I'd start with the two cheapest ideas: the Young Founders' Letter and one evening like the Jugaad Masterclass. Both are small enough to actually run and quick to test.</p>
+            <div class="out"><b>Output</b>Two working prototypes, a cost sheet, and the first honest feedback.</div>
+          </details>
+        </div>
+        <div class="col">
+          <div class="days">Days 61-90</div>
+          <h4>Make it repeatable</h4>
+          <p class="col-lead">Write it all down so each idea runs every term without me.</p>
+          <details class="col-more" open>
+            <summary>Read the plan</summary>
+            <p>I'd write it all down so each one runs every term without me, with someone who owns it, a real budget, and a calendar the next cohort just picks up.</p>
+            <div class="out"><b>Output</b>A system that runs without me in the room, plus numbers worth showing admissions.</div>
+          </details>
+        </div>
+      </div>
+      <div class="watermark">90</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="cta">
+  <div class="wrap">
+    <div class="stamp" id="approve-stamp">Approved?</div>
+    <span class="eyebrow rv" style="justify-content:center;display:inline-flex">05 · Final call</span>
+    <h2 class="kin">Hire someone who has already started.</h2>
+    <p class="rv">All of this can start in ninety days, most of it on budgets that round down to nothing. The drafts are right here on this page. The only thing left is picking which one we build first.</p>
+    <div class="ctas rv" style="justify-content:center;display:flex;gap:14px;flex-wrap:wrap">
+      <a class="btn" href="https://calendly.com/hello-yoshasanghvi" target="_blank" rel="noopener">Let's connect ✈</a>
+      <a class="btn ghost" href="mailto:hello@yoshasanghvi.com?subject=Tetr%20Student%20Experience,%20Yosha%20Sanghvi">Email Yosha</a>
+      <a class="btn ghost" href="tel:+918667086322">Contact ☎</a>
+      <a class="btn ghost" href="#" id="stamp-btn">Stamp this application</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap frow">
+    <span>YOSHA SANGHVI · APPLICATION · TETR COLLEGE OF BUSINESS · 2026</span>
+    <span>MADE FOR ONE READER <span id="egg-dot" title="…">·🥋·</span> EGGS FOUND: <span id="egg-count">0</span>/3</span>
+  </div>
+</footer>
+
+
+<div id="overlay" class="overlay" hidden><button class="ovclose" id="ovclose" aria-label="Back to the itinerary">&larr;</button><section class="ideapanel lab" id="panel-seminar" hidden>
+  
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="eyebrow">Proposal · for the India term</div>
+      <div class="host">WITH AN ART COLLEGE</div>
+      <h1>Art History of <em>India</em></h1>
+      <p class="sub">Know the country before you build for it.</p>
+      <div class="meta"><span>2 days</span><span>Inside the India term</span><span>With an art college</span><span>Repeats every India term</span></div>
+    </div>
+
+    <div class="psw">
+      <div class="c p"><h3>Problem</h3><p>Students spend the India term building a brand for a country they barely know.</p></div>
+      <div class="c s"><h3>Solution</h3><p>We run a two-day seminar on India's art history with an art college, from the cave paintings to the brands on shelves today.</p></div>
+      <div class="c w"><h3>What it's worth</h3><p>Students who understand where they are build braver, more original brands. That costs two days and one art-college partner.</p></div>
+    </div>
+
+    <div class="run">
+      <div class="head">
+        <div class="k">TETR &times; an art college</div>
+        <h2>Two days, the story of India in art</h2>
+        <p>Six sessions that cover thirty thousand years.</p>
+      </div>
+
+      <div class="day">
+        <div class="dh"><b>Day One</b><span>The long story</span></div>
+        <div class="row"><div class="n">01</div><div class="cb"><div class="nm">Where it begins</div><div class="ds">The cave paintings of Bhimbetka, thirty thousand years old, and what the first Indian images were for.</div></div><div class="tm">Morning</div></div>
+        <div class="row"><div class="n">02</div><div class="cb"><div class="nm">Temples and bronzes</div><div class="ds">From the painted caves of Ajanta to the Chola bronzes, art as devotion and as power.</div></div><div class="tm">Midday</div></div>
+        <div class="row"><div class="n">03</div><div class="cb"><div class="nm">The miniature world</div><div class="ds">Mughal and Rajput miniatures: courts, gardens, and the art of the very small.</div></div><div class="tm">Afternoon</div></div>
+      </div>
+
+      <div class="day">
+        <div class="dh"><b>Day Two</b><span>Into the modern</span></div>
+        <div class="row"><div class="n">04</div><div class="cb"><div class="nm">A new nation's art</div><div class="ds">The Bengal School and the Progressives, artists working out what Indian art is after 1947.</div></div><div class="tm">Morning</div></div>
+        <div class="row"><div class="n">05</div><div class="cb"><div class="nm">India now</div><div class="ds">Contemporary Indian art and design, and how it turns up in the brands students already know.</div></div><div class="tm">Midday</div></div>
+        <div class="row" style="border-bottom:none"><div class="n">06</div><div class="cb"><div class="nm">Look closely</div><div class="ds">A guided, hands-on session with the partner's scholars and works, seeing and handling the real thing up close.</div></div><div class="tm">Afternoon</div></div>
+      </div>
+    </div>
+
+    <div class="lenses">
+      <div class="k">What the two days give them</div>
+      <div class="lgrid">
+        <div class="l"><span class="ln">01</span><b>A sense of place</b><span>India is anything but new, with thirty thousand years of making behind it.</span></div>
+        <div class="l"><span class="ln">02</span><b>An eye for the original</b><span>Knowing the references is what makes design braver.</span></div>
+        <div class="l"><span class="ln">03</span><b>Respect for the source</b><span>Where motifs, colour, and craft actually come from.</span></div>
+        <div class="l"><span class="ln">04</span><b>Better brands</b><span>Context that shows up in the work they build that term.</span></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="card"><h4>The partner</h4><p>We'd run it with a serious Indian art college, like Sir J. J. School of Art or the Dr. Shankilal K. Somaiya School of Art. They bring the scholars and the works; TETR brings the cohort.</p></div>
+      <div class="card"><h4>What it costs</h4><p>It takes two days and one partner, slotted into the India term, and repeats every year.</p></div>
+    </div>
+
+    <p class="payoff">Understand the country first, <em>then</em> build for it.</p>
+  </div>
+</section><section class="ideapanel lab" id="panel-taste" hidden>
+  
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="eyebrow">Proposal · for the India term</div>
+      <div class="collab">TETR &times; THE GATHERING</div>
+      <h1>The <em>Taste</em> Lab</h1>
+      <p class="sub">Bring India to campus, on a plate.</p>
+      <div class="dots"><i style="background:var(--saffron)"></i><i style="background:var(--chili)"></i><i style="background:var(--turmeric)"></i><i style="background:var(--leaf)"></i><i style="background:var(--plum)"></i></div>
+      <div class="meta"><span>2 days</span><span>On the Gurgaon campus</span><span>With The Gathering</span><span>Repeats every India term</span></div>
+    </div>
+
+    <div class="psw">
+      <div class="c p"><h3>Problem</h3><p>Students build a D2C brand for a country most of them have never tasted, and rarely get a day together on home ground.</p></div>
+      <div class="c s"><h3>Solution</h3><p>We give them two days on campus with The Gathering, a complete immersion in India's food and the people who make it.</p></div>
+      <div class="c w"><h3>What it's worth</h3><p>They get real exposure to the country they're selling to, learned through the senses, plus one shared day that finally makes a scattered cohort feel like a year.</p></div>
+    </div>
+
+    <div class="menu">
+      <div class="head">
+        <div class="k">TETR × The Gathering presents</div>
+        <h2>A two-day tasting menu</h2>
+        <p>Six courses, one country.</p>
+      </div>
+
+      <div class="day">
+        <div class="dh"><b>Day One</b><span>Taste the country</span></div>
+        <div class="course"><div class="n">01</div><div class="cb"><div class="nm">The map of India, in bites</div><div class="ds">Stalls of regional and near-forgotten dishes open across campus, a maker standing at every table.</div></div><div class="tm">From late morning</div></div>
+        <div class="course"><div class="n">02</div><div class="cb"><div class="nm">A soundtrack that travels</div><div class="ds">Live music moves from one part of India to another while you eat your way across it.</div></div><div class="tm">All afternoon</div></div>
+        <div class="course"><div class="n">03</div><div class="cb"><div class="nm">The Long Table</div><div class="ds">The whole cohort and a few invited guests, one table, one meal, no phones.</div></div><div class="tm">At dusk</div></div>
+      </div>
+
+      <div class="day">
+        <div class="dh"><b>Day Two</b><span>Into the kitchen</span></div>
+        <div class="course"><div class="n">04</div><div class="cb"><div class="nm">In the kitchen with the chefs</div><div class="ds">Step behind the pass with chefs and home cooks, learning the techniques and the stories behind regional dishes.</div></div><div class="tm">Morning</div></div>
+        <div class="course"><div class="n">05</div><div class="cb"><div class="nm">Cook it together</div><div class="ds">Hands in the food, the cohort helps curate and cook a few regional dishes alongside the chefs.</div></div><div class="tm">Midday</div></div>
+        <div class="course" style="border-bottom:none"><div class="n">06</div><div class="cb"><div class="nm">The shared table</div><div class="ds">Everything the room cooked comes together into one feast, eaten side by side.</div></div><div class="tm">Afternoon</div></div>
+      </div>
+    </div>
+
+    <div class="lenses">
+      <div class="k">What the two days leave behind</div>
+      <div class="lgrid">
+        <div class="l"><span class="ln">01</span><b>Many flavours, one plate</b><span>The whole country on a single thali.</span></div>
+        <div class="l"><span class="ln">02</span><b>Taste carries memory</b><span>Here a dish is a place and a person.</span></div>
+        <div class="l"><span class="ln">03</span><b>The forgotten is the future</b><span>Old grains and recipes are the new ideas.</span></div>
+        <div class="l"><span class="ln">04</span><b>Joy, genuinely shared</b><span>One table does what a month cannot.</span></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="card"><h4>The partner</h4><p>We'd run it with The Gathering, the food festival that treats food as living culture, full of forgotten flavours and chefs paired with artists. They bring the festival; TETR brings the campus and the cohort.</p></div>
+      <div class="card"><h4>What it costs</h4><p>It runs two days on the campus students already live on, so it adds nothing to a heavy travel calendar. It feeds the D2C term and returns every year with a fresh line-up.</p></div>
+    </div>
+
+    <p class="payoff">Understand a country by <em>tasting</em> it, then go and build for it.</p>
+  </div>
+</section><section class="ideapanel lab" id="panel-jugaad" hidden>
+  
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="eyebrow">Proposal · for the India term</div>
+      <div class="host">WITH A SHARK TANK INDIA FOUNDER</div>
+      <h1>The <em>Jugaad</em> Masterclass</h1>
+      <p class="sub">How India really does business, learned in a single evening.</p>
+      <div class="meta"><span>One evening · 2 hours</span><span>On campus</span><span>No build, no homework</span><span>Repeats every India term</span></div>
+    </div>
+
+    <div class="psw">
+      <div class="c p"><h3>Problem</h3><p>Students launch brands for India without ever learning how business actually gets done here, from the bargaining to the workarounds nobody writes down.</p></div>
+      <div class="c s"><h3>Solution</h3><p>We give the cohort a two-hour evening with a Shark Tank India founder who teaches the street-smarts of Indian business through stories and live demos.</p></div>
+      <div class="c w"><h3>What it's worth</h3><p>In one evening they get the lay of the land and the instinct for how to source, price and sell here, without losing a working day they can't spare.</p></div>
+    </div>
+
+    <div class="run">
+      <div class="head">
+        <div class="k">How the evening runs</div>
+        <h2>Two hours, no slides that matter</h2>
+        <p>It's stories, one live haggle, and straight answers.</p>
+      </div>
+      <div class="row"><div class="n">01</div><div class="cb"><div class="nm">The opener</div><div class="ds">The host opens with a scrappy story of their own, a deal that nearly died and the workaround that saved a launch. It sets the tone for the whole evening, practical and hard-won.</div></div><div class="tm">15 min</div></div>
+      <div class="row"><div class="n">02</div><div class="cb"><div class="nm">What jugaad really is</div><div class="ds">Beyond the frugal hack. The mindset of turning a no into a how, told through real cases, from the dabbawalas to the kirana credit book to the WhatsApp-run business.</div></div><div class="tm">20 min</div></div>
+      <div class="row"><div class="n">03</div><div class="cb"><div class="nm">The art of the deal, India edition</div><div class="ds">How bargaining actually works here, from anchoring to the walk-away to why a deal in India is really about the relationship. The host runs a live on-stage haggle to show it.</div></div><div class="tm">30 min</div></div>
+      <div class="row"><div class="n">04</div><div class="cb"><div class="nm">Getting things done</div><div class="ds">The unwritten rules. Who you call, the workaround, the "it will happen" that somehow does, and how the informal economy quietly runs the country.</div></div><div class="tm">20 min</div></div>
+      <div class="row"><div class="n">05</div><div class="cb"><div class="nm">Selling to India</div><div class="ds">What all of it means for a young brand: pricing for a value-conscious buyer, earning trust, and reaching people through kirana shelves and word of mouth.</div></div><div class="tm">20 min</div></div>
+      <div class="row" style="border-bottom:none"><div class="n">06</div><div class="cb"><div class="nm">Rapid fire</div><div class="ds">Students throw their real venture hurdles at the host and get blunt, street-level answers on the spot.</div></div><div class="tm">15 min</div></div>
+    </div>
+
+    <div class="lenses">
+      <div class="k">What they walk out knowing</div>
+      <div class="lgrid">
+        <div class="l"><span class="ln">01</span><b>Turn no into how</b><span>The real jugaad instinct.</span></div>
+        <div class="l"><span class="ln">02</span><b>A deal is a relationship</b><span>It runs on trust as much as money.</span></div>
+        <div class="l"><span class="ln">03</span><b>The workaround is the way</b><span>How things actually move here.</span></div>
+        <div class="l"><span class="ln">04</span><b>Sell to wallet and trust</b><span>What wins the Indian buyer.</span></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="card"><h4>The host</h4><p>A Shark Tank India founder is the natural fit, especially since Pratham Mittal already sits on the panel. Aman Gupta would bring the selling instinct, Anupam Mittal the storytelling, and Arjun Vaidya, already close to TETR, would be the easiest to land.</p></div>
+      <div class="card"><h4>What it costs</h4><p>It takes one evening on campus, two hours, with nothing due the next morning. That respects a cohort already busy launching companies, and gives them the lay of the land over dinner.</p></div>
+    </div>
+
+    <p class="payoff">Everything India teaches you about doing business, learned in <em>one evening</em>.</p>
+  </div>
+</section><section class="ideapanel lab" id="panel-improv" hidden>
+  
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="eyebrow">Proposal · for the India term</div>
+      <div class="host">WITH TANMAY BHAT</div>
+      <h1>The <em>Improv</em> Lab</h1>
+      <p class="sub">Learn to think on your feet, out loud, in front of everyone.</p>
+      <div class="meta"><span>Half a day</span><span>On campus</span><span>Headlined by Tanmay Bhat</span><span>Repeats every term</span></div>
+    </div>
+
+    <div class="psw">
+      <div class="c p"><h3>Problem</h3><p>Founders pitch, sell, and field hard questions live, all the time, but are never taught to perform under pressure.</p></div>
+      <div class="c s"><h3>Solution</h3><p>We run a high-energy improv workshop, no scripts, just games that teach the cohort to think on their feet, listen hard, and build on whatever they're handed.</p></div>
+      <div class="c w"><h3>What it's worth</h3><p>They pick up the real founder skills while it still feels like play, and the cohort stops being strangers in one afternoon.</p></div>
+    </div>
+
+    <div class="run">
+      <div class="head">
+        <div class="k">A half-day on its feet</div>
+        <h2>The run of play</h2>
+        <p>Five rounds, no script.</p>
+      </div>
+      <div class="row"><div class="n">01</div><div class="cb"><div class="nm">Warm up</div><div class="ds">Quick games to get everyone loose and past the fear of looking silly in front of the room.</div></div><div class="tm">First</div></div>
+      <div class="row"><div class="n">02</div><div class="cb"><div class="nm">Yes, and</div><div class="ds">The one rule that powers improv and good teams: take what you are given and build on it, never block.</div></div><div class="tm">Core</div></div>
+      <div class="row"><div class="n">03</div><div class="cb"><div class="nm">Under pressure</div><div class="ds">Scenes with no plan, status games, and curveballs, so the unexpected stops being scary.</div></div><div class="tm">Core</div></div>
+      <div class="row"><div class="n">04</div><div class="cb"><div class="nm">The founder twist</div><div class="ds">Improvised pitches, fielding absurd investor questions, and selling something invented on the spot.</div></div><div class="tm">Sharp end</div></div>
+      <div class="row" style="border-bottom:none"><div class="n">05</div><div class="cb"><div class="nm">Showtime</div><div class="ds">A short, low-stakes performance to the room, where the whole cohort is on the same side.</div></div><div class="tm">Close</div></div>
+    </div>
+
+    <div class="lenses">
+      <div class="k">What the day leaves behind</div>
+      <div class="lgrid">
+        <div class="l"><span class="ln">01</span><b>Yes, and</b><span>Build on the offer instead of blocking it.</span></div>
+        <div class="l"><span class="ln">02</span><b>Listen to respond</b><span>Not to win the point.</span></div>
+        <div class="l"><span class="ln">03</span><b>Fail out loud</b><span>And recover faster next time.</span></div>
+        <div class="l"><span class="ln">04</span><b>One room</b><span>Strangers turned into a crew.</span></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="card"><h4>The host</h4><p>Tanmay Bhat, one of the most recognised names in Indian comedy and an active startup angel investor. He carries real weight both on a stage and in a room full of founders, which is exactly why the cohort will lean in.</p></div>
+      <div class="card"><h4>What it costs</h4><p>It runs half a day on the campus they already live on, no travel, no homework. It pays off every time they pitch, sell, or get hit with a question they didn't see coming, and it repeats every term.</p></div>
+    </div>
+
+    <p class="payoff">The pressure of performing live, <em>rehearsed</em> as a game until it stops being scary.</p>
+  </div>
+</section><section class="ideapanel mag" id="panel-twentytwo" hidden>
+  
+  <div class="head">
+    <div class="eyebrow">Concept demo · format mock</div>
+    <h1>TETR · 22 Under 22</h1>
+  </div>
+
+  <div class="magpsw">
+    <div class="psw">
+      <div class="c p"><h3>Problem</h3><p>TETR is new, so parents and applicants have very little proof that its students are real builders.</p></div>
+      <div class="c s"><h3>Solution</h3><p>Every year we publish a magazine profiling twenty-two student founders and what they built, ranked by traction.</p></div>
+      <div class="c w"><h3>What it&#39;s worth</h3><p>It gives parents proof and applicants a bar to clear, and it travels the moment each founder shares their page.</p></div>
+    </div>
+  </div>
+<div class="viewer">
+    <div class="book" id="book">
+      <div class="desk"></div>
+
+      <!-- LEAF 0 -->
+      <div class="leaf">
+        <div class="face front cover"><div class="pg">
+          <div class="topbar">Learn business by doing business</div>
+          <div class="masthead"><h1>TETR</h1><span>College of Business</span></div>
+          <div class="issue">Issue 01<br>2026</div>
+
+          <div class="scene">
+            <svg viewBox="0 0 340 440" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="spot" cx="50%" cy="40%" r="58%"><stop offset="0" stop-color="#FBE8B0" stop-opacity=".55"/><stop offset="1" stop-color="#FBE8B0" stop-opacity="0"/></radialGradient>
+                <linearGradient id="fig" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBE8B0"/><stop offset="1" stop-color="#C89B1E"/></linearGradient>
+                <linearGradient id="figsh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C89B1E"/><stop offset="1" stop-color="#FFC629"/></linearGradient>
+              </defs>
+              <ellipse cx="170" cy="195" rx="150" ry="180" fill="url(#spot)"/>
+              <!-- orbit lines -->
+              <g stroke="#FFC629" stroke-opacity=".32" stroke-width="1" stroke-dasharray="2 4" fill="none">
+                <line x1="170" y1="200" x2="74" y2="138"/><line x1="170" y1="200" x2="266" y2="138"/>
+                <line x1="170" y1="200" x2="58" y2="262"/><line x1="170" y1="200" x2="282" y2="262"/>
+              </g>
+              <!-- founder bust -->
+              <g>
+                <path d="M86 360 Q90 250 150 220 L190 220 Q250 250 254 360 Z" fill="url(#figsh)"/>
+                <path d="M92 360 Q98 252 150 224 L188 224 Q244 252 248 360 Z" fill="url(#fig)"/>
+                <path d="M150 224 Q170 248 190 224 L190 232 Q170 256 150 232 Z" fill="#1FA463" opacity=".22"/>
+                <circle cx="170" cy="150" r="44" fill="url(#fig)"/>
+                <path d="M170 106 a44 44 0 0 1 0 88 Z" fill="#C89B1E" opacity=".28"/>
+                <!-- tetromino on chest -->
+                <g fill="#1FA463" opacity=".9"><rect x="156" y="300" width="9" height="9" rx="1.5"/><rect x="166" y="300" width="9" height="9" rx="1.5"/><rect x="176" y="300" width="9" height="9" rx="1.5"/><rect x="166" y="290" width="9" height="9" rx="1.5"/></g>
+              </g>
+              <!-- floating chips -->
+              <g font-family="Inter,sans-serif">
+                <g transform="translate(74,138)"><circle r="26" fill="#147A4A" stroke="#FFC629" stroke-width="1.6"/><g stroke="#FBFAF2" stroke-width="2" fill="none"><rect x="-9" y="-11" width="18" height="22" rx="2"/><path d="M-9 -4h18"/><circle cx="0" cy="3" r="3.5"/></g></g>
+                <g transform="translate(266,138)"><circle r="26" fill="#147A4A" stroke="#FFC629" stroke-width="1.6"/><g stroke="#FBFAF2" stroke-width="2" fill="none"><circle cx="0" cy="0" r="11"/><path d="M-11 0h22M0 -11v22M-8 -6q8 6 16 0M-8 6q8 -6 16 0"/></g></g>
+                <g transform="translate(58,262)"><circle r="26" fill="#147A4A" stroke="#FFC629" stroke-width="1.6"/><g stroke="#FBFAF2" stroke-width="2" fill="none"><path d="M-10 -3h20l-2 15h-16z"/><path d="M-6 -3a6 6 0 0 1 12 0"/></g></g>
+                <g transform="translate(282,262)"><circle r="26" fill="#147A4A" stroke="#FFC629" stroke-width="1.6"/><text x="0" y="6" text-anchor="middle" font-size="20" font-weight="800" fill="#FBFAF2">$</text></g>
+              </g>
+              <!-- pop tetromino confetti -->
+              <g opacity=".95"><rect x="120" y="70" width="13" height="13" rx="2" fill="#FFC629" transform="rotate(18 126 76)"/><rect x="214" y="92" width="12" height="12" rx="2" fill="#FFC629" transform="rotate(-12 220 98)"/><rect x="232" y="330" width="12" height="12" rx="2" fill="#3FB36A" transform="rotate(20 238 336)"/><rect x="92" y="318" width="11" height="11" rx="2" fill="#5FD38A" transform="rotate(-16 97 323)"/></g>
+            </svg>
+          </div>
+          <div class="figcap">The Class of 2028</div>
+
+          <div class="flash">"Find your crazy. Crazy attracts crazy."<span>Tarun Gangwar, Co-founder</span></div>
+          <div class="teasers">
+            <div>Inside the founding council<b>NASA · Cornell · SoftBank</b></div>
+            <div>The bet behind a campus-less college<b>Seven countries, four years</b></div>
+            <div>"Begin before you are ready"<b>Pratham Mittal</b></div>
+          </div>
+
+          <div class="headline"><em>22</em> UNDER 22</div>
+          <div class="dek">Young founders building real companies before they graduate.</div>
+          <div class="bottombar"><span class="barcode"></span><span>tetr.com · QS Most Innovative B-School 2025</span></div>
+        </div></div>
+        <div class="face back credits"><div class="pg">
+          <div class="big serif">"An ambitious mission needs ambitious people."</div>
+          <div class="meta">
+            TETR · 22 UNDER 22<br>
+            Issue 01, 2026<br><br>
+            A concept mock by Yosha Sanghvi.<br>
+            Names and highlights are drawn from students and leaders TETR has published.<br>
+            Venture names and figures are left as fields, to be filled from TETR's records.<br>
+            Photographs to be added.
+          </div>
+          <div class="folio">TETR · 02</div>
+        </div></div>
+      </div>
+
+      <!-- LEAF 1 -->
+      <div class="leaf">
+        <div class="face front toc"><div class="pg">
+          <span class="kick">In this issue</span><div class="rule"></div>
+          <h2 class="serif">Contents</h2>
+          <div style="margin-top:14px">
+            <div class="row"><b>01</b><span class="t">From the founder</span><span class="pp">Pratham Mittal</span></div>
+            <div class="row"><b>02</b><span class="t">The people behind TETR</span><span class="pp">leadership</span></div>
+            <div class="row"><b>03</b><span class="t">The founding council</span><span class="pp">NASA · Cornell · SoftBank</span></div>
+            <div class="row"><b>04</b><span class="t">The 22</span><span class="pp">student founders</span></div>
+            <div class="row"><b>05</b><span class="t">Class of 2028, the roster</span><span class="pp">all 22</span></div>
+          </div>
+          <div class="folio">TETR · 03</div>
+        </div></div>
+        <div class="face back opener"><div class="pg">
+          <span class="kick">From the founder</span><div class="rule"></div>
+          <h2 class="serif">Why we built a college with no campus</h2>
+          <div class="stand serif">Pratham Mittal on the bet behind TETR, two years in.</div>
+          <div class="body serif">
+            <p class="dropcap">We took a simple, unfashionable idea seriously: that you learn business by actually doing business. So we send students across seven countries and ask them to build real companies before they graduate.</p>
+            <p>Two years in, the proof is in the students. They have closed real customers in cities they had landed in days earlier, with real money on the line. This issue is about them, and about the people who chose to build the place around them.</p>
+          </div>
+          <div class="folio">TETR · 04</div>
+        </div></div>
+      </div>
+
+      <!-- LEAF 2 -->
+      <div class="leaf">
+        <div class="face front who"><div class="pg">
+          <div class="hero">
+            <span class="cap">Pratham Mittal · add photo</span>
+            <svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="13" fill="#9DC0A8"/><path d="M6 70c0-16 11-25 24-25s24 9 24 25" fill="#9DC0A8"/></svg>
+            <div class="ovl"><span class="role">The Founder</span><div class="name serif">Pratham Mittal</div></div>
+          </div>
+          <div class="cred">Founder, TETR. Earlier founded Masters' Union and Outgrow. Judge on Shark Tank India.</div>
+          <div class="text serif">He has built schools and software companies before. The thesis under all of it is the same, that ambitious young people learn fastest when the stakes are real and the work ships.</div>
+          <div class="quote serif">"Begin before you are ready. Ready is a story people tell themselves so they can wait."<b>Pratham Mittal · Founder</b></div>
+          <div class="folio">TETR · 05</div>
+        </div></div>
+        <div class="face back who"><div class="pg">
+          <div class="hero">
+            <span class="cap">Tarun Gangwar · add photo</span>
+            <svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="13" fill="#9DC0A8"/><path d="M6 70c0-16 11-25 24-25s24 9 24 25" fill="#9DC0A8"/></svg>
+            <div class="ovl"><span class="role">The Co-founder</span><div class="name serif">Tarun Gangwar</div></div>
+          </div>
+          <div class="cred">Co-founder, TETR. Director at Master's Union. Former Director at Vedantu.</div>
+          <div class="text serif">If the founder holds the bet, the co-founder holds the machine: the visas, the partners, the hundred things that must be ready in a city before students arrive. The idea, he will tell you, is a tenth of it.</div>
+          <div class="quote serif">"You need to find your crazy, because crazy attracts crazy."<b>Tarun Gangwar · Co-founder</b></div>
+          <div class="folio">TETR · 06</div>
+        </div></div>
+      </div>
+
+      <!-- LEAF 3 -->
+      <div class="leaf">
+        <div class="face front council"><div class="pg">
+          <span class="kick">The founding council</span><div class="rule"></div>
+          <h2 class="serif">Who they put in the room</h2>
+          <div class="grid">
+            <div class="m"><div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="12" fill="#3E6B53"/><path d="M8 70c0-15 10-23 22-23s22 8 22 23" fill="#3E6B53"/></svg><span class="cap">add photo</span></div><div class="nm serif">Dr. Edward Rogers</div><div class="rl">Chief Learning Officer. Former Chief Knowledge Officer, NASA.</div></div>
+            <div class="m"><div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="12" fill="#3E6B53"/><path d="M8 70c0-15 10-23 22-23s22 8 22 23" fill="#3E6B53"/></svg><span class="cap">add photo</span></div><div class="nm serif">Dr. Daniel Van Der Vliet</div><div class="rl">Strategic Advisor. Executive Director, Cornell University.</div></div>
+            <div class="m"><div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="12" fill="#3E6B53"/><path d="M8 70c0-15 10-23 22-23s22 8 22 23" fill="#3E6B53"/></svg><span class="cap">add photo</span></div><div class="nm serif">Manoj Kohli</div><div class="rl">Chief Evangelist. Former Country Head, SoftBank. Ex-CEO, Bharti Airtel.</div></div>
+            <div class="m"><div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="12" fill="#3E6B53"/><path d="M8 70c0-15 10-23 22-23s22 8 22 23" fill="#3E6B53"/></svg><span class="cap">add photo</span></div><div class="nm serif">The leadership team</div><div class="rl">Directors from IIM, Harvard, McKinsey, BCG, boAt, Paytm and more.</div></div>
+          </div>
+          <div class="folio">TETR · 07</div>
+        </div></div>
+        <div class="face back divider"><div class="pg">
+          <span class="kick" style="color:var(--gold)">The list</span>
+          <div class="massive">THE<br><em>22</em></div>
+          <p class="serif">These are twenty-two student founders from the Class of 2028, with their profiles built from what TETR has already shared publicly. The venture names and this year's figures come straight from TETR's own records, and the final order runs by traction.</p>
+          <div class="folio" style="color:rgba(251,250,242,.6)">TETR · 08</div>
+        </div></div>
+      </div>
+
+      <!-- LEAF 4 -->
+      <div class="leaf">
+        <div class="face front roster"><div class="pg">
+          <span class="kick">Class of 2028</span><div class="rule"></div>
+          <h2 class="serif">The roster</h2>
+          <div class="note">They're listed alphabetically here, and ranked by traction once the figures are confirmed.</div>
+          <div class="cols">
+            <div class="r"><b>01</b>Ariv Bansal</div><div class="r"><b>02</b>Aslesha Agarwal</div>
+            <div class="r"><b>03</b>Carlos Castrillón</div><div class="r"><b>04</b>Carlos Merle</div>
+            <div class="r"><b>05</b>Chaitya Shah</div><div class="r"><b>06</b>Edgar Laiton</div>
+            <div class="r"><b>07</b>Emilio Lozano</div><div class="r"><b>08</b>Fiene Klemmer</div>
+            <div class="r"><b>09</b>Heedong Cho</div><div class="r"><b>10</b>Hitarth Chauhan</div>
+            <div class="r"><b>11</b>Ishaan Sheth</div><div class="r"><b>12</b>Lars Godoy</div>
+            <div class="r"><b>13</b>Lilijana Abrell</div><div class="r"><b>14</b>Maria R. Rosado</div>
+            <div class="r"><b>15</b>Mariana Bárcenas</div><div class="r"><b>16</b>Mariya Nazarova</div>
+            <div class="r"><b>17</b>Mira Jhala</div><div class="r"><b>18</b>Prerna Arora</div>
+            <div class="r"><b>19</b>Renata Torres</div><div class="r"><b>20</b>Santiago Rivera</div>
+            <div class="r"><b>21</b>Sila Kaya</div><div class="r"><b>22</b>Sneha Gupta</div>
+          </div>
+          <div class="folio">TETR · 09</div>
+        </div></div>
+        <div class="face back"><div class="pg feat">
+          <div class="rank">01</div>
+          <div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="13" fill="#3E6B53"/><path d="M6 70c0-16 11-25 24-25s24 9 24 25" fill="#3E6B53"/></svg><span class="cap">add photo</span></div>
+          <span class="role">Dubai term · go-to-market</span>
+          <div class="name serif">Mariya Nazarova</div>
+          <div class="hl serif">Pitched her team's product to Emirates, one of the hardest rooms a first-year founder could ask for.</div>
+          <div class="stats"><div class="s"><label>Venture</label><div class="v todo">from records</div></div><div class="s"><label>This year</label><div class="v todo">from records</div></div></div>
+          <div class="folio">TETR · 10</div>
+        </div></div>
+      </div>
+
+      <!-- LEAF 5 -->
+      <div class="leaf">
+        <div class="face front"><div class="pg feat">
+          <div class="rank">02</div>
+          <div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="13" fill="#3E6B53"/><path d="M6 70c0-16 11-25 24-25s24 9 24 25" fill="#3E6B53"/></svg><span class="cap">add photo</span></div>
+          <span class="role">Dubai term · community</span>
+          <div class="name serif">Carlos Merle</div>
+          <div class="hl serif">Helped run the first Founders Connect Dubai and carried the TETR flag at GITEX Global, one of the largest tech events on earth.</div>
+          <div class="stats"><div class="s"><label>Venture</label><div class="v todo">from records</div></div><div class="s"><label>This year</label><div class="v todo">from records</div></div></div>
+          <div class="folio">TETR · 11</div>
+        </div></div>
+        <div class="face back"><div class="pg feat">
+          <div class="rank">03</div>
+          <div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="13" fill="#3E6B53"/><path d="M6 70c0-16 11-25 24-25s24 9 24 25" fill="#3E6B53"/></svg><span class="cap">add photo</span></div>
+          <span class="role">India term · D2C</span>
+          <div class="name serif">Sneha Gupta</div>
+          <div class="hl serif">Built a dropshipping venture in the India term and shared what mentorship actually changed about the way she sells.</div>
+          <div class="stats"><div class="s"><label>Venture</label><div class="v todo">from records</div></div><div class="s"><label>This year</label><div class="v todo">from records</div></div></div>
+          <div class="folio">TETR · 12</div>
+        </div></div>
+      </div>
+
+      <!-- LEAF 6 -->
+      <div class="leaf">
+        <div class="face front more"><div class="pg">
+          <span class="kick">Also in the 22</span><div class="rule"></div>
+          <h2 class="serif">More of the class</h2>
+          <div class="grid">
+            <div class="m"><div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="12" fill="#3E6B53"/><path d="M8 70c0-15 10-23 22-23s22 8 22 23" fill="#3E6B53"/></svg><span class="cap">add photo</span></div><div class="nm serif">Ariv Bansal</div><div class="hl">Student founder featured building in Dubai.</div></div>
+            <div class="m"><div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="12" fill="#3E6B53"/><path d="M8 70c0-15 10-23 22-23s22 8 22 23" fill="#3E6B53"/></svg><span class="cap">add photo</span></div><div class="nm serif">Hitarth Chauhan</div><div class="hl">Wrote a year-in-review on building by doing.</div></div>
+            <div class="m"><div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="12" fill="#3E6B53"/><path d="M8 70c0-15 10-23 22-23s22 8 22 23" fill="#3E6B53"/></svg><span class="cap">add photo</span></div><div class="nm serif">Renata Torres</div><div class="hl">On building across seven countries.</div></div>
+            <div class="m"><div class="portrait"><svg viewBox="0 0 60 70"><circle cx="30" cy="24" r="12" fill="#3E6B53"/><path d="M8 70c0-15 10-23 22-23s22 8 22 23" fill="#3E6B53"/></svg><span class="cap">add photo</span></div><div class="nm serif">Carlos Castrillón</div><div class="hl">On what the semester actually taught him.</div></div>
+          </div>
+          <div class="folio">TETR · 13</div>
+        </div></div>
+        <div class="face back closing"><div class="pg">
+          <span class="kick">Next issue</span><div class="rule"></div>
+          <div class="big serif">Next year there'll be <em>twenty-two more,</em> because the list keeps growing with the college.</div>
+          <div class="folio">TETR · 14</div>
+        </div></div>
+      </div>
+
+      <!-- LEAF 7 -->
+      <div class="leaf">
+        <div class="face front backcover"><div class="pg">
+          <img class="logo" src="https://cdn.tetr.com/assets/ih-images/V2/tetrNewFooterLogo.svg" alt="TETR" style="height:22px">
+          <div class="tl serif">Learn business <em>by doing business.</em></div>
+          <div class="ft">tetr.com · Seven countries · Class of 2028</div>
+        </div></div>
+        <div class="face back" style="background:var(--paper2)!important"><div class="pg"></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="swipehint" style="text-align:center;color:var(--cream-dim);font-size:.8rem;margin:14px 0 4px">Swipe sideways to turn the pages</div><div class="controls">
+    <button id="prev">&larr; Prev</button>
+    <span class="counter" id="counter">Cover</span>
+    <button id="next">Next &rarr;</button>
+  </div>
+  <div class="hint">Turns like a real magazine. Real names and highlights from TETR; venture and revenue fields fill from their records. Drop in photographs where marked.</div>
+
+<script>
+  const book=document.getElementById('book');
+  const leaves=[...book.querySelectorAll('.leaf')];
+  const N=leaves.length;
+  leaves.forEach((l,i)=>l.style.zIndex=N-i);
+  let current=0;
+  const labels=['Cover','pp. 2-3','pp. 4-5','pp. 6-7','pp. 8-9','pp. 10-11','pp. 12-13','Back cover'];
+  const prev=document.getElementById('prev'),next=document.getElementById('next'),counter=document.getElementById('counter');
+  function label(){counter.textContent=labels[current]||('Spread '+current);prev.disabled=current===0;next.disabled=current===N;}
+  next.onclick=()=>{if(current<N){leaves[current].classList.add('flipped');leaves[current].style.zIndex=current+1;current++;label();}};
+  prev.onclick=()=>{if(current>0){current--;leaves[current].classList.remove('flipped');leaves[current].style.zIndex=N-current;label();}};
+  addEventListener('keydown',e=>{if(e.key==='ArrowRight')next.onclick();if(e.key==='ArrowLeft')prev.onclick();});
+  label();
+</script>
+</section><section class="ideapanel let" id="panel-letter" hidden>
+  
+  <div class="wrap">
+    <div class="top">
+      <div class="eyebrow">Concept demo · sample drafts</div>
+      <h1>The Young Founders' Letter</h1>
+      <p>One honest letter a year to young founders everywhere, in three editions.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="on" data-ed="0">The Founder · Pratham</button>
+      <button data-ed="1">The Co-founder · Tarun</button>
+      <button data-ed="2">The Student</button>
+    </div>
+
+    <div class="sheet">
+      <div class="masthead"><span class="name">The Young Founders' Letter</span><span class="yr">TETR · 2026</span></div>
+
+      <div class="ed on">
+        <div class="kicker">Edition I · The Founder</div>
+        <h2>On building before you are ready</h2>
+        <p class="salut">To the young founders reading this,</p>
+        <p>When I started TETR, the plan sounded reckless the moment I said it out loud. The idea was to take eighteen-year-olds, send them across the world, and ask them to build real companies before they had a degree in anything. Most people in education told me it wouldn't work, and about some of it, they were right.</p>
+        <p>What worked this year still surprises me. Students who had never sold anything closed real, paying customers in cities they'd landed in only days earlier. A few of them built things I'd have backed if they had walked into my office as strangers. That's the whole bet: you learn to build by building.</p>
+        <p>What didn't work, I'll be just as honest about. We moved too fast in a few places. We underestimated how heavy it is to start over in a new country every few months, and how much that takes out of a person even when the work is going well. We're still learning how to hold a group together while the ground keeps shifting under them, and I'd rather tell you that than pretend it's solved.</p>
+        <p>If you're deciding whether to start something young, here's my honest advice. You'll never feel ready. Ready is a story people tell themselves so they can keep waiting. The founders I back are the ones who start with whatever they have and fix it in public while everyone else is still getting set. Begin before you're ready, stay honest about what breaks, and keep going.</p>
+        <p>We're only two years in, and the first class graduates in 2028. I'll write to you every year until then, and after that too, with whatever we actually learn.</p>
+        <div class="signoff"><div class="sig">Pratham Mittal</div><div class="who">Founder, TETR</div></div>
+      </div>
+
+      <div class="ed">
+        <div class="kicker">Edition II · The Co-founder</div>
+        <h2>What it takes to run a college that never stands still</h2>
+        <p class="salut">To the young founders,</p>
+        <p>Pratham writes about the bet, so I'll write about the machine, because the machine is where most of the lessons actually live.</p>
+        <p>A normal college has one building and one calendar. We have a cohort that picks up its whole life every few months and lands in a new country with a new business to build. That reads well on a brochure. In practice it means visas, housing, partners, and a hundred small things all have to be ready in a city before the students arrive, every single time. When one of those breaks, students feel it on day one. We've had days like that, and we own them.</p>
+        <p>What we got right this year was the people we put around the students. The founders and operators who show up as mentors are the real curriculum, and a student learns more in one honest hour with someone who has built and lost than in a month of lectures. We leaned into that, and it worked.</p>
+        <p>Where we got it wrong was assuming the structure could be light. Young founders need freedom, but they also need a spine to push against. We added more of that this year, and the work got sharper for it.</p>
+        <p>If you're building anything, here's the unglamorous truth I'd pass on. The idea is maybe a tenth of it. The other nine tenths is doing ordinary things reliably, on time, when no one is watching. Founders who learn that early beat founders with better ideas who never learn it at all.</p>
+        <div class="signoff"><div class="sig">Tarun Gangwar</div><div class="who">Co-founder, TETR</div></div>
+      </div>
+
+      <div class="ed">
+        <div class="kicker">Edition III · The Student</div>
+        <h2>From the inside, by a student</h2>
+        <p class="salut">To whoever is reading this and deciding,</p>
+        <p>I'll tell you the parts the website can't.</p>
+        <p>The hardest part of all of this is the leaving. Every few months you build a life in a city, a routine, people you actually like, and then you pack it into a suitcase and start over somewhere you've never been. The first time it happens, it knocks you sideways. By the third, you've learned something about yourself that I don't think you can learn sitting still.</p>
+        <p>The best thing is that the work is real. I sold to actual customers in a country I'd landed in that week. I've failed in front of real people, which is worse and better than failing an exam, because you remember it and you fix it. I've sat across from founders I used to only read about and asked them the questions I actually had.</p>
+        <p>I'd only tell you to come if you genuinely want to be uncomfortable on purpose. If you want a safe four years, this isn't it. If you want to find out what you're capable of when nobody is holding your hand, I haven't found a faster way.</p>
+        <p>I'm not going to pretend every term was good, because some of them were genuinely lonely. But I'm a different person than the one who applied, and I'd do it again without thinking twice.</p>
+        <div class="signoff"><div class="sig">A student</div><div class="who">Class of 2028</div></div>
+      </div>
+
+    </div>
+    <p class="note">Sample drafts, written to show the voice and format. The real editions would be written by Pratham, Tarun, and that year's student.</p>
+  </div>
+
+<script>
+  const tabs=[...document.querySelectorAll('.tabs button')];
+  const eds=[...document.querySelectorAll('.ed')];
+  tabs.forEach(t=>t.onclick=()=>{
+    tabs.forEach(x=>x.classList.remove('on'));t.classList.add('on');
+    eds.forEach(e=>e.classList.remove('on'));eds[+t.dataset.ed].classList.add('on');
+    document.getElementById('overlay').scrollTo({top:0,behavior:'smooth'});
+  });
+</script>
+</section></div>
+
+
+<div id="toast" role="status"></div>
+
+<script>
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(pointer:fine)').matches;
+
+  const toast = document.getElementById('toast');
+  let toastT;
+  function showToast(msg, ms=3800){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(()=>toast.classList.remove('show'), ms);
+  }
+
+  const found = new Set();
+  function foundEgg(id, msg){
+    if(found.has(id)){ showToast(msg); return; }
+    found.add(id);
+    document.getElementById('egg-count').textContent = found.size;
+    showToast(msg + '  (' + found.size + '/3)');
+    if(found.size === 3) setTimeout(()=>showToast('🥚 All three. Thoroughness: also part of the job description.'), 4200);
+  }
+
+  /* kinetic headings */
+  document.querySelectorAll('h2.kin').forEach(h=>{
+    const words = h.textContent.trim().split(/\s+/);
+    h.textContent = '';
+    words.forEach((w,i)=>{
+      const s = document.createElement('span');
+      s.className = 'w';
+      s.textContent = w;
+      s.style.transitionDelay = (i*0.06)+'s';
+      h.appendChild(s);
+      h.appendChild(document.createTextNode(' '));
+    });
+  });
+
+  /* split-flap destination */
+  const cities = ['DUBAI','MUMBAI','SINGAPORE','ACCRA','NEW YORK','BUENOS AIRES','MADRID'];
+  const flapWrap = document.getElementById('flap-dest');
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ·';
+  const maxLen = Math.max(...cities.map(c=>c.length));
+  for(let i=0;i<maxLen;i++){
+    const s = document.createElement('span');
+    s.className = 'flap'; s.textContent = ' ';
+    flapWrap.appendChild(s);
+  }
+  const flaps = [...flapWrap.children];
+  function setCity(name){
+    const padded = name.padEnd(maxLen,' ');
+    flaps.forEach((f,i)=>{
+      const target = padded[i];
+      if(reduce){ f.textContent = target; return; }
+      let ticks = 0, max = 4 + Math.floor(Math.random()*7);
+      const iv = setInterval(()=>{
+        f.textContent = CHARS[Math.floor(Math.random()*CHARS.length)];
+        if(++ticks >= max){ clearInterval(iv); f.textContent = target; }
+      }, 45 + i*4);
+    });
+  }
+  let ci = 0;
+  setCity(cities[0]);
+  if(!reduce) setInterval(()=>{ ci=(ci+1)%cities.length; setCity(cities[ci]); }, 3400);
+
+  /* text scramble for rail */
+  function scramble(el, target){
+    if(reduce){ el.textContent = target; return; }
+    let frame = 0;
+    const maxF = 12;
+    const iv = setInterval(()=>{
+      el.textContent = target.split('').map((ch,i)=>{
+        if(ch===' ') return ' ';
+        return (frame/maxF > i/target.length) ? ch : CHARS[Math.floor(Math.random()*26)];
+      }).join('');
+      if(++frame > maxF){ clearInterval(iv); el.textContent = target; }
+    }, 38);
+  }
+
+  /* cursor trail */
+  if(finePointer && !reduce){
+    const trail = document.getElementById('trail');
+    let mx = innerWidth/2, my = innerHeight/2, tx = mx, ty = my, lastA = 0;
+    addEventListener('mousemove', e=>{ mx = e.clientX; my = e.clientY; trail.style.opacity = .8; });
+    (function loop(){
+      const dx = mx - tx, dy = my - ty;
+      tx += dx * 0.12; ty += dy * 0.12;
+      if(Math.hypot(dx,dy) > 2) lastA = Math.atan2(dy,dx) * 180/Math.PI;
+      trail.style.transform = 'translate('+(tx+14)+'px,'+(ty+14)+'px) rotate('+lastA+'deg)';
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  /* hero parallax stamps */
+  const floats = [...document.querySelectorAll('.float-stamp')];
+  if(finePointer && !reduce){
+    const hero = document.querySelector('header.hero');
+    hero.addEventListener('mousemove', e=>{
+      const r = hero.getBoundingClientRect();
+      const px = (e.clientX - r.left)/r.width - .5;
+      const py = (e.clientY - r.top)/r.height - .5;
+      floats.forEach(f=>{
+        const d = parseFloat(f.dataset.depth || 1);
+        f.style.translate = (px * 26 * d)+'px '+(py * 20 * d)+'px';
+      });
+    });
+  }
+
+  /* scroll: progress, arc plane, ring, approve */
+  const bar = document.getElementById('progress');
+  const arcPath = document.getElementById('arcpath');
+  const arcPlane = document.getElementById('arc-plane');
+  const arcDiv = document.querySelector('.arc-div');
+  const arcLen = arcPath.getTotalLength();
+  const term = document.getElementById('term');
+  const ringFg = document.getElementById('ring-fg');
+  const RING = 163.4;
+  let approved = false;
+
+  function onScroll(){
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    bar.style.width = (pct*100).toFixed(2) + '%';
+
+    const ar = arcDiv.getBoundingClientRect();
+    let ap = 1 - (ar.bottom / (innerHeight + ar.height));
+    ap = Math.max(0, Math.min(1, ap));
+    const pt = arcPath.getPointAtLength(ap * arcLen);
+    const pt2 = arcPath.getPointAtLength(Math.min(arcLen, ap*arcLen + 2));
+    const ang = Math.atan2(pt2.y-pt.y, pt2.x-pt.x) * 180/Math.PI;
+    const sx = ar.width / 1200, sy = ar.height / 140;
+    arcPlane.style.transform = 'translate('+(pt.x*sx - 10)+'px,'+(pt.y*sy - 10)+'px) rotate('+ang+'deg)';
+
+    if(ringFg){
+      const tr = term.getBoundingClientRect();
+      let tp = (innerHeight*0.6 - tr.top) / tr.height;
+      tp = Math.max(0, Math.min(1, tp));
+      ringFg.style.strokeDashoffset = RING * (1 - tp);
+    }
+
+    if(pct > 0.985 && !approved){
+      approved = true;
+      document.getElementById('approve-stamp').classList.add('show');
+    }
+    navUpdate();
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+
+  /* acts: lit + rail + bg */
+  const acts = [...document.querySelectorAll('.act')];
+  const railWhen = document.getElementById('rail-when');
+  const railPhase = document.getElementById('rail-phase');
+  const railIdx = document.getElementById('rail-idx');
+  let currentAct = -1;
+  const actIO = new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      const i = acts.indexOf(e.target);
+      if(e.isIntersecting){
+        e.target.classList.add('lit');
+        if(i !== currentAct){
+          currentAct = i;
+          scramble(railWhen, e.target.dataset.when);
+          railPhase.textContent = e.target.dataset.phase;
+          railIdx.textContent = String(i+1).padStart(2,'0');
+          term.className = e.target.dataset.bg;
+        }
+      } else if(e.boundingClientRect.top > 0){
+        e.target.classList.remove('lit');
+      }
+    });
+  }, {rootMargin:'-25% 0px -40% 0px'});
+  acts.forEach(a=>actIO.observe(a));
+
+  /* nav active */
+  const navLinks = [...document.querySelectorAll('nav a.nl')];
+  const secs = navLinks.map(a=>document.querySelector(a.getAttribute('href')));
+  function navUpdate(){
+    let active = -1;
+    secs.forEach((s,i)=>{ if(s && s.getBoundingClientRect().top < innerHeight*0.4) active = i; });
+    navLinks.forEach((a,i)=>a.classList.toggle('active', i===active));
+  }
+
+  /* generic reveal */
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('lit'); io.unobserve(e.target);} });
+  }, {threshold:.18});
+  document.querySelectorAll('.rv,.tcard,.mma,.ob,h2.kin,.plan .col').forEach(el=>io.observe(el));
+
+  /* card tilt */
+  if(finePointer && !reduce){
+    document.querySelectorAll('.tcard,.ob').forEach(card=>{
+      card.addEventListener('mousemove', e=>{
+        const r = card.getBoundingClientRect();
+        const rx = ((e.clientY - r.top)/r.height - .5) * -5;
+        const ry = ((e.clientX - r.left)/r.width - .5) * 5;
+        card.style.transform = 'perspective(700px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY(-2px)';
+      });
+      card.addEventListener('mouseleave', ()=>{ card.style.transform = ''; });
+    });
+  }
+
+  /* unified tap+click binder so eggs fire reliably inside iOS in-app browsers.
+     A short 120ms lock only collapses the duplicate click that follows a touch;
+     it must stay well under the speed of intentional rapid egg taps. */
+  function onTap(el, fn){
+    if(!el) return;
+    var lock=false;
+    function h(e){ if(lock) return; lock=true; setTimeout(function(){lock=false;},120);
+      if(e&&e.type==='touchend'){e.preventDefault();} fn(e); }
+    el.addEventListener('click',h);
+    el.addEventListener('touchend',h,{passive:false});
+  }
+
+  /* EGG 1 (desktop): type TETR on a physical keyboard */
+  let buf = '';
+  window.addEventListener('keydown', e=>{
+    if(e.key.length !== 1) return;
+    buf = (buf + e.key.toUpperCase()).slice(-4);
+    if(buf === 'TETR'){ stampRain(); foundEgg('type','🛂 ADMIT. Keyboard egg found. Attention to detail comes standard.'); }
+  });
+  /* EGG 1 (touch): no keyboard on a phone, so tap the YS → TETR logo to spell it.
+     four taps = the same egg, so phone users can still reach all three. */
+  (function(){
+    const brand = document.getElementById('brand-egg');
+    if(!brand) return;
+    let n = 0, t;
+    const cues = ['T…','TE…','TET…'];
+    onTap(brand, ()=>{
+      n++;
+      clearTimeout(t); t = setTimeout(()=>{ n = 0; }, 1800);
+      if(n === 4){ n = 0; stampRain(); foundEgg('type','🛂 ADMIT. You spelled it out. Attention to detail comes standard.'); }
+      else { showToast(cues[n-1], 1400); }
+    });
+  })();
+  function stampRain(){
+    if(reduce) return;
+    const words = ['ADMIT','DXB ✓','BOM ✓','SIN ✓','ACC ✓','JFK ✓','EZE ✓','MAD ✓','HAND LUGGAGE ONLY'];
+    for(let i=0;i<14;i++){
+      const el = document.createElement('div');
+      el.className = 'rain-stamp';
+      el.textContent = words[i % words.length];
+      el.style.left = (4 + Math.random()*88) + 'vw';
+      el.style.top = (8 + Math.random()*78) + 'vh';
+      el.style.setProperty('--r', (Math.random()*30 - 15) + 'deg');
+      el.style.animation = 'drop 2.4s ' + (i*0.09) + 's both';
+      if(i % 3 === 0){ el.style.color = 'var(--stamp)'; el.style.borderColor = 'var(--stamp)'; }
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 3500 + i*90);
+    }
+  }
+
+  /* EGG 2: tap the plane 5x */
+  let taps = 0, tapT;
+  onTap(document.getElementById('plane'), ()=>{
+    taps++;
+    clearTimeout(tapT); tapT = setTimeout(()=>taps=0, 1600);
+    if(taps === 5){
+      taps = 0;
+      foundEgg('plane','🥊 Five taps, no tap-out. Resilience: tested.');
+    } else if(taps === 3){
+      showToast('✈ keep going…');
+    }
+  });
+
+  /* EGG 3: dojo dot */
+  onTap(document.getElementById('egg-dot'), ()=>{
+    foundEgg('dojo','🥋 Cutting weight for a fight and planning a term across seven cities use the same muscle: ruthless prioritisation.');
+  });
+
+  /* glove poke */
+  let pokes = 0;
+  onTap(document.getElementById('glove'), ()=>{
+    pokes++;
+    const lines = ['jab.','jab, cross.','jab, cross, hook.','okay okay. hired yet?'];
+    showToast('🥊 ' + lines[Math.min(pokes-1, lines.length-1)], 2200);
+  });
+
+  /* cohort wave */
+  const waveEl = document.getElementById('cohort-wave');
+  if(waveEl){
+    let waves = 0;
+    const wl = ['👋 hi.','👋 yes, you.','👋 see you in the lobby.','👋 by name, remember?'];
+    onTap(waveEl, ()=>{
+      waves++;
+      showToast(wl[Math.min(waves-1, wl.length-1)], 2200);
+    });
+  }
+
+  /* stamp button */
+  onTap(document.getElementById('stamp-btn'), e=>{
+    if(e) e.preventDefault();
+    document.getElementById('approve-stamp').classList.add('show');
+    stampRain();
+    showToast('🛂 Stamped. It just needs a signature now.');
+  });
+
+  console.log('%cYOSHA → TETR%c\nYou opened the console. Of course you did.\nThat is exactly the kind of person I want to work with.',
+    'font-family:monospace;font-size:20px;font-weight:bold;color:#2336E0','font-family:monospace;font-size:12px;color:#444');
+
+  onScroll();
+})();
+</script>
+
+<script>
+/* mobile only: the plan / observations / track-record blocks are authored
+   open (so desktop shows everything). On phone we collapse them by default;
+   the user taps the summary to expand. Re-syncs if the viewport crosses 760px. */
+(function(){
+  var MOBILE = window.matchMedia('(max-width:760px)');
+  var sel = '.col-more, .ob-more, .tc-more';
+  function apply(){
+    var collapse = MOBILE.matches;
+    [].forEach.call(document.querySelectorAll(sel), function(d){
+      /* don't fight the user mid-session: only set the default state once,
+         and only force-collapse on mobile. */
+      if(collapse){ if(!d.dataset.userToggled) d.removeAttribute('open'); }
+      else { d.setAttribute('open',''); }
+    });
+  }
+  /* remember if the user opened one, so a resize repaint doesn't slam it shut */
+  document.addEventListener('toggle', function(e){
+    var t=e.target;
+    if(t.matches && t.matches(sel) && t.open) t.dataset.userToggled='1';
+  }, true);
+  apply();
+  (MOBILE.addEventListener? MOBILE.addEventListener('change',apply) : MOBILE.addListener(apply));
+})();
+</script>
+
+<script>
+/* mobile only: give each idea rail a dot indicator that tracks the swipe,
+   so it reads as an interactive gallery rather than a clipped row. */
+(function(){
+  var MOBILE = window.matchMedia('(max-width:760px)');
+  var built = false;
+  function build(){
+    if(built || !MOBILE.matches) return;
+    built = true;
+    [].forEach.call(document.querySelectorAll('.ideas-rail .billgrid'), function(rail){
+      var cards = [].slice.call(rail.querySelectorAll('.billcard'));
+      if(cards.length < 2) return;
+      var dots = document.createElement('div');
+      dots.className = 'rail-dots';
+      cards.forEach(function(_,i){
+        var d = document.createElement('i');
+        if(i===0) d.className = 'on';
+        dots.appendChild(d);
+      });
+      rail.parentNode.insertBefore(dots, rail.nextSibling);
+      var ticking = false;
+      function sync(){
+        ticking = false;
+        var mid = rail.scrollLeft + rail.clientWidth/2;
+        var best = 0, bestDist = Infinity;
+        cards.forEach(function(c,i){
+          var cmid = c.offsetLeft + c.offsetWidth/2;
+          var dist = Math.abs(cmid - mid);
+          if(dist < bestDist){ bestDist = dist; best = i; }
+        });
+        [].forEach.call(dots.children, function(d,i){ d.className = (i===best)?'on':''; });
+      }
+      rail.addEventListener('scroll', function(){
+        if(!ticking){ ticking = true; requestAnimationFrame(sync); }
+      }, {passive:true});
+    });
+  }
+  if(MOBILE.matches) build();
+  (MOBILE.addEventListener? MOBILE.addEventListener('change',build) : MOBILE.addListener(build));
+})();
+</script>
+
+<script>
+/* mobile only: wrap the long schedule (.run/.menu) and the .lenses grid inside
+   each idea panel in a tap-to-expand <details>, so a phone opens the panel on a
+   short summary instead of an endless scroll. Desktop/tablet are untouched. */
+(function(){
+  var MOBILE = window.matchMedia('(max-width:760px)');
+  var wrapped = false;
+  function labelFor(panel, kind){
+    if(kind==='run') return 'See the full two-day run-of-show';
+    return 'See what the cohort walks away with';
+  }
+  function wrapBlock(block, label){
+    if(!block || block.parentNode.classList.contains('ext')) return;
+    var d = document.createElement('details');
+    d.className = 'ext';
+    var s = document.createElement('summary');
+    s.innerHTML = label + '<span class="x">＋</span>';
+    block.parentNode.insertBefore(d, block);
+    d.appendChild(s);
+    d.appendChild(block);
+  }
+  function apply(){
+    if(wrapped || !MOBILE.matches) return;
+    wrapped = true;
+    [].forEach.call(document.querySelectorAll('.overlay .ideapanel'), function(panel){
+      /* the schedule block is .run on most panels, .menu on the taste panel */
+      var sched = panel.querySelector('.run, .menu');
+      if(sched) wrapBlock(sched, labelFor(panel,'run'));
+      var lenses = panel.querySelector('.lenses');
+      if(lenses) wrapBlock(lenses, labelFor(panel,'lenses'));
+    });
+  }
+  /* wrap when first needed (on the first mobile interaction / load) */
+  if(MOBILE.matches) apply();
+  (MOBILE.addEventListener? MOBILE.addEventListener('change',apply) : MOBILE.addListener(apply));
+})();
+</script>
+
+<script>
+/* deep-dive overlay: open the full detailed panels from the draft cards */
+(function(){
+  var ov=document.getElementById('overlay');
+  if(!ov) return;
+  var panels=[].slice.call(document.querySelectorAll('.ideapanel'));
+  var scrollY=0;
+  function lockBody(){
+    /* iOS-safe scroll lock: pin the body so the page underneath cannot scroll,
+       and remember where we were so we can put it back on close. */
+    scrollY=window.pageYOffset||document.documentElement.scrollTop||0;
+    document.body.style.position='fixed';
+    document.body.style.top=(-scrollY)+'px';
+    document.body.style.left='0';
+    document.body.style.right='0';
+    document.body.style.width='100%';
+  }
+  function unlockBody(){
+    document.body.style.position='';
+    document.body.style.top='';
+    document.body.style.left='';
+    document.body.style.right='';
+    document.body.style.width='';
+    window.scrollTo(0,scrollY);
+  }
+  function openPanel(id){
+    var p=document.getElementById('panel-'+id); if(!p) return;
+    panels.forEach(function(x){x.setAttribute('hidden','');});
+    p.removeAttribute('hidden');
+    ov.removeAttribute('hidden');
+    lockBody();
+    ov.scrollTop=0;
+  }
+  function closePanel(){
+    ov.setAttribute('hidden','');
+    panels.forEach(function(x){x.setAttribute('hidden','');});
+    unlockBody();
+  }
+  /* fire on click AND on touch so taps register reliably inside iOS in-app
+     browsers (WhatsApp / Gmail / Files), where synthetic clicks can be dropped. */
+  function bindOpen(b){
+    var id=b.getAttribute('data-open');
+    var done=false;
+    function go(e){ if(done) return; done=true; setTimeout(function(){done=false;},150);
+      if(e){e.preventDefault();} openPanel(id); }
+    b.addEventListener('click',go);
+    b.addEventListener('touchend',go,{passive:false});
+  }
+  [].slice.call(document.querySelectorAll('[data-open]')).forEach(bindOpen);
+  var cl=document.getElementById('ovclose');
+  if(cl){ cl.addEventListener('click',closePanel); cl.addEventListener('touchend',function(e){e.preventDefault();closePanel();},{passive:false}); }
+  /* tap the dimmed backdrop (outside the panel) to close */
+  ov.addEventListener('click',function(e){ if(e.target===ov) closePanel(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!ov.hasAttribute('hidden')) closePanel(); });
+})();
+</script>
+
+<script>
+/* one-time "wink" so people know the cards are clickable when they scroll to them */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !('IntersectionObserver' in window)) return;
+  var cards = [].slice.call(document.querySelectorAll('.billcard'));
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el = e.target;
+      var delay = (parseInt(el.getAttribute('data-cue-i'),10) || 0) * 110;
+      setTimeout(function(){
+        el.classList.add('click-cue');
+        setTimeout(function(){ el.classList.remove('click-cue'); }, 760);
+      }, delay);
+      io.unobserve(el);
+    });
+  }, {threshold:.45});
+  cards.forEach(function(el,i){ el.setAttribute('data-cue-i', i % 4); io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
